@@ -39,6 +39,7 @@ namespace ProjectCrawler
             // Load our content
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
             Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
+            Renderer.LoadImage("dropShadow", "Images/dropShadow");
             GameObjectManager.AddObject("ninja", new Player());
             GameObjectManager.AddObject("enemy", new FunnyEnemy(new Vector2(100.0f)));
         }

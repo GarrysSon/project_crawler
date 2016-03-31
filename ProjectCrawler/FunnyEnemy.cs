@@ -12,8 +12,12 @@ namespace ProjectCrawler
         private readonly Vector2[] PATH_MOTION = { new Vector2(2, 0), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(0, -2) };
 
         private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
-        private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.08f, 0.0f, -0.08f };
-        private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(5, -10), new Vector2(0), new Vector2(-5, -10) };
+        private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.05f, 0.0f, -0.05f };
+        private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(3, -6), new Vector2(0), new Vector2(-3, -6) };
+
+        private readonly Vector2 SIZE = new Vector2(64);
+        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 32);
+        private readonly Vector2 SHADOW_SIZE = new Vector2(80, 40);
 
         private int pathFrameNumber;
         private int pathFrameTimer;
@@ -42,7 +46,18 @@ namespace ProjectCrawler
         {
             base.Render();
 
-            Renderer.DrawSprite("funnyEnemy", position + FRAME_POS_OFFSETS[animFrameNumber], new Vector2(64), FRAME_ANGLE_OFFSETS[animFrameNumber]);
+            Renderer.DrawSprite(
+                "funnyEnemy", 
+                position + FRAME_POS_OFFSETS[animFrameNumber], 
+                SIZE, 
+                FRAME_ANGLE_OFFSETS[animFrameNumber], 
+                Depth: Renderer.GenerateDepthFromScreenPosition(position));
+            Renderer.DrawSprite(
+                "dropShadow", 
+                position + SHADOW_OFFSET, 
+                SHADOW_SIZE, 
+                ColorFilter: Color.White * 0.4f, 
+                Depth: 1.0f);
         }
 
         /// <summary>

@@ -45,7 +45,7 @@ namespace ProjectCrawler
         /// </summary>
         public static void BeginRender()
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront);
         }
 
         /// <summary>
@@ -62,18 +62,23 @@ namespace ProjectCrawler
         /// <param name="Tag">Tag of a previously loaded image.</param>
         /// <param name="Position">Position to draw it.</param>
         /// <param name="Size">Size to draw it.</param>
-        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size, float Angle = 0f)
+        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size, float Angle = 0f, Color? ColorFilter = null, float Depth = 0.0f)
         {
             Texture2D tex = textures[Tag];
             spriteBatch.Draw(
                 tex, 
                 new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y), 
                 null, 
-                Color.White, 
+                ColorFilter == null ? Color.White : ColorFilter.Value, 
                 Angle, 
                 new Vector2(tex.Width / 2, tex.Height / 2), 
                 SpriteEffects.None, 
-                1.0f);
+                Depth);
+        }
+
+        public static float GenerateDepthFromScreenPosition(Vector2 Position)
+        {
+            return 1.0f - Position.Y / (float)gd.Viewport.Height;
         }
     }
 }
