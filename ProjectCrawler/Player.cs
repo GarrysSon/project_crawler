@@ -17,6 +17,11 @@ namespace ProjectCrawler
         private const int MAX_HEALTH = 100;
 
         /// <summary>
+        /// The speed of the character.
+        /// </summary>
+        private const int PLAYER_SPEED = 3;
+
+        /// <summary>
         /// The Player's health.
         /// </summary>
         [DefaultValue(MAX_HEALTH)]
@@ -97,6 +102,33 @@ namespace ProjectCrawler
              *  expect me to be able to help. You’re in the same position you were before we met, 
              *  but now it’s my fault."
              */
+
+            // Grabbing the current state of the keyboard.
+            KeyboardState currentState = Keyboard.GetState();
+
+            // Move up if the W key is pressed.
+            if(currentState.IsKeyDown(Keys.W))
+            {
+                this.position.Y += -PLAYER_SPEED;
+            }
+
+            // Move left if the A key is pressed.
+            if(currentState.IsKeyDown(Keys.A))
+            {
+                this.position.X += -PLAYER_SPEED;
+            }
+
+            // Move down if the S key is pressed.
+            if(currentState.IsKeyDown(Keys.S))
+            {
+                this.position.Y += PLAYER_SPEED;
+            }
+
+            // Move right if the D key is pressed.
+            if(currentState.IsKeyDown(Keys.D))
+            {
+                this.position.X += PLAYER_SPEED;
+            }
         }
 
         /// <summary>
@@ -106,7 +138,7 @@ namespace ProjectCrawler
         {
             // This is the renderer you know...no more jokes.
             // Draw the ninja!
-            Renderer.DrawSprite("ninja", new Vector2(200), new Vector2(64, 64));
+            Renderer.DrawSprite("ninja", this.position, new Vector2(64, 64));
         }
     }
 }
