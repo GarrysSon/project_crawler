@@ -74,7 +74,7 @@ namespace ProjectCrawler
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.BurlyWood);
 
             // Begin rendering all the shiz.
             Renderer.BeginRender();
