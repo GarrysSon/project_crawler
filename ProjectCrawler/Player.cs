@@ -11,6 +11,9 @@ namespace ProjectCrawler
     /// </summary>
     public class Player : GameObject
     {
+        /// <summary>
+        /// The max health alotted to the player character.
+        /// </summary>
         private const int MAX_HEALTH = 100;
 
         /// <summary>
