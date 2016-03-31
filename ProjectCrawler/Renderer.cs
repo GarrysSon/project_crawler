@@ -62,7 +62,7 @@ namespace ProjectCrawler
         /// <param name="Tag">Tag of a previously loaded image.</param>
         /// <param name="Position">Position to draw it.</param>
         /// <param name="Size">Size to draw it.</param>
-        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size)
+        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size, float Angle = 0f)
         {
             Texture2D tex = textures[Tag];
             spriteBatch.Draw(
@@ -70,7 +70,7 @@ namespace ProjectCrawler
                 new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y), 
                 null, 
                 Color.White, 
-                0.0f, 
+                Angle, 
                 new Vector2(tex.Width / 2, tex.Height / 2), 
                 SpriteEffects.None, 
                 1.0f);

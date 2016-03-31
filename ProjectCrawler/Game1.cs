@@ -40,6 +40,7 @@ namespace ProjectCrawler
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
             Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
             GameObjectManager.AddObject("ninja", new Player());
+            GameObjectManager.AddObject("enemy", new FunnyEnemy(new Vector2(100.0f)));
         }
 
         /// <summary>
@@ -61,7 +62,8 @@ namespace ProjectCrawler
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            ((Player)GameObjectManager.GetObject("ninja")).Update();
+            ((FunnyEnemy)GameObjectManager.GetObject("enemy")).Update();
 
             base.Update(gameTime);
         }
@@ -77,6 +79,7 @@ namespace ProjectCrawler
             // Begin rendering all the shiz.
             Renderer.BeginRender();
             ((Player)GameObjectManager.GetObject("ninja")).Render();
+            ((FunnyEnemy)GameObjectManager.GetObject("enemy")).Render();
             Renderer.EndRender();
 
             base.Draw(gameTime);
