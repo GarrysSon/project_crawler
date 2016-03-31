@@ -15,7 +15,7 @@ namespace ProjectCrawler
         }
 
         /// <summary>
-        /// Rectangle defining boudning box of object.
+        /// Rectangle defining bounding box of object.
         /// </summary>
         Rectangle BoundingBox
         {
