@@ -25,7 +25,7 @@ namespace ProjectCrawler
         /// <summary>
         /// The Player's level.
         /// </summary>
-        [DefaultValue(0)]
+        [DefaultValue(1)]
         public int Level { get; set; }
 
         /// <summary>
