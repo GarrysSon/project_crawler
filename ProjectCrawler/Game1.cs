@@ -37,6 +37,7 @@ namespace ProjectCrawler
         {
             // Load our content
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
+            Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
         }
 
         /// <summary>
