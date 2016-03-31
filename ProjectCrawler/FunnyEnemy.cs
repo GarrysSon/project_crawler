@@ -11,11 +11,15 @@ namespace ProjectCrawler
         private readonly int[] PATH_DURATIONS = { 300, 140, 300, 140 };
         private readonly Vector2[] PATH_MOTION = { new Vector2(2, 0), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(0, -2) };
 
-        private readonly int[] FRAME_DURATIONS = { 10, 10, 10, 10 };
-        //private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.0}
+        private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
+        private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.08f, 0.0f, -0.08f };
+        private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(5, -10), new Vector2(0), new Vector2(-5, -10) };
 
-        private int frameNumber;
-        private int frameTimer;
+        private int pathFrameNumber;
+        private int pathFrameTimer;
+
+        private int animFrameNumber;
+        private int animFrameTimer;
 
         /// <summary>
         /// Constructor for the FunnyEnemy.
@@ -25,8 +29,10 @@ namespace ProjectCrawler
         {
             position = StartPosition;
             health = MAX_HEALTH;
-            frameNumber = 0;
-            frameTimer = 0;
+            pathFrameNumber = 0;
+            pathFrameTimer = 0;
+            animFrameNumber = 0;
+            animFrameTimer = 0;
         }
 
         /// <summary>
@@ -36,7 +42,7 @@ namespace ProjectCrawler
         {
             base.Render();
 
-            Renderer.DrawSprite("funnyEnemy", position, new Vector2(64));
+            Renderer.DrawSprite("funnyEnemy", position + FRAME_POS_OFFSETS[animFrameNumber], new Vector2(64), FRAME_ANGLE_OFFSETS[animFrameNumber]);
         }
 
         /// <summary>
@@ -47,14 +53,21 @@ namespace ProjectCrawler
             base.Update();
 
             // Update the path
-            if (++frameTimer == PATH_DURATIONS[frameNumber])
+            if (++pathFrameTimer == PATH_DURATIONS[pathFrameNumber])
             {
-                frameTimer = 0;
-                frameNumber = (frameNumber + 1) % PATH_DURATIONS.Length;
+                pathFrameTimer = 0;
+                pathFrameNumber = (pathFrameNumber + 1) % PATH_DURATIONS.Length;
             }
 
             // Move along the path
-            position += PATH_MOTION[frameNumber];
+            position += PATH_MOTION[pathFrameNumber];
+
+            // Update the animation
+            if (++animFrameTimer == FRAME_DURATIONS[animFrameNumber])
+            {
+                animFrameTimer = 0;
+                animFrameNumber = (animFrameNumber + 1) % FRAME_DURATIONS.Length;
+            }
         }
     }
 }
