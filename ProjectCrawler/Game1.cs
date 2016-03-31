@@ -26,6 +26,7 @@ namespace ProjectCrawler
         protected override void Initialize()
         {
             Renderer.Init(this.Content, this.GraphicsDevice);
+            GameObjectManager.Init();
             base.Initialize();
         }
 
@@ -37,6 +38,7 @@ namespace ProjectCrawler
         {
             // Load our content
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
+            GameObjectManager.AddObject("ninja", new Player());
         }
 
         /// <summary>
@@ -71,8 +73,9 @@ namespace ProjectCrawler
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            // Begin rendering all the shiz.
             Renderer.BeginRender();
-            Renderer.DrawSprite("ninja", new Vector2(200), new Vector2(64, 64));
+            ((Player)GameObjectManager.GetObject("ninja")).Render();
             Renderer.EndRender();
 
             base.Draw(gameTime);

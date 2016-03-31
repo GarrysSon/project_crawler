@@ -105,6 +105,8 @@ namespace ProjectCrawler
         public void Render()
         {
             // This is the renderer you know...no more jokes.
+            // Draw the ninja!
+            Renderer.DrawSprite("ninja", new Vector2(200), new Vector2(64, 64));
         }
     }
 }
