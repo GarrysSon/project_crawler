@@ -10,7 +10,6 @@ namespace ProjectCrawler
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         public Game1()
         {
@@ -26,8 +25,7 @@ namespace ProjectCrawler
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            Renderer.Init(this.Content, this.GraphicsDevice);
             base.Initialize();
         }
 
@@ -37,10 +35,8 @@ namespace ProjectCrawler
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            // Load our content
+            Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
         }
 
         /// <summary>
@@ -75,7 +71,9 @@ namespace ProjectCrawler
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            Renderer.BeginRender();
+            Renderer.DrawSprite("ninja", new Vector2(200), new Vector2(64, 64));
+            Renderer.EndRender();
 
             base.Draw(gameTime);
         }
