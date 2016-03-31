@@ -21,6 +21,15 @@ namespace ProjectCrawler
         /// </summary>
         private const int PLAYER_SPEED = 3;
 
+        private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
+        private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.08f, 0.0f, -0.08f };
+        private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(5, -10), new Vector2(0), new Vector2(-5, -10) };
+
+        private int animFrameNumber;
+        private int animFrameTimer;
+
+        private bool animate = false;
+
         /// <summary>
         /// The Player's health.
         /// </summary>
@@ -50,6 +59,8 @@ namespace ProjectCrawler
         {
             this.position = new Vector2();
             this.boundingBox = new Rectangle();
+            this.animFrameNumber = 0;
+            this.animFrameTimer = 0;
         }
 
         /// <summary>
@@ -106,28 +117,50 @@ namespace ProjectCrawler
             // Grabbing the current state of the keyboard.
             KeyboardState currentState = Keyboard.GetState();
 
+            // Reset the animation boolean.
+            this.animate = false;
+
             // Move up if the W key is pressed.
             if(currentState.IsKeyDown(Keys.W))
             {
                 this.position.Y += -PLAYER_SPEED;
+                this.animate = true;
             }
 
             // Move left if the A key is pressed.
             if(currentState.IsKeyDown(Keys.A))
             {
                 this.position.X += -PLAYER_SPEED;
+                this.animate = true;
             }
 
             // Move down if the S key is pressed.
             if(currentState.IsKeyDown(Keys.S))
             {
                 this.position.Y += PLAYER_SPEED;
+                this.animate = true;
             }
 
             // Move right if the D key is pressed.
             if(currentState.IsKeyDown(Keys.D))
             {
                 this.position.X += PLAYER_SPEED;
+                this.animate = true;
+            }
+
+            // Checking if we should animate the movement.
+            if (this.animate)
+            {
+                // Update the animation
+                if (++animFrameTimer == FRAME_DURATIONS[animFrameNumber])
+                {
+                    animFrameTimer = 0;
+                    animFrameNumber = (animFrameNumber + 1) % FRAME_DURATIONS.Length;
+                }
+            }
+            else
+            {
+                animFrameNumber = 0;
             }
         }
 
@@ -138,7 +171,7 @@ namespace ProjectCrawler
         {
             // This is the renderer you know...no more jokes.
             // Draw the ninja!
-            Renderer.DrawSprite("ninja", this.position, new Vector2(64, 64));
+            Renderer.DrawSprite("ninja", this.position + FRAME_POS_OFFSETS[animFrameNumber], new Vector2(64, 64), FRAME_ANGLE_OFFSETS[animFrameNumber]);
         }
     }
 }
