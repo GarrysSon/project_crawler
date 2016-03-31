@@ -21,13 +21,26 @@ namespace ProjectCrawler
         /// </summary>
         private const int PLAYER_SPEED = 3;
 
+        /// <summary>
+        /// Variables used for animations.
+        /// </summary>
         private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
         private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.08f, 0.0f, -0.08f };
         private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(5, -10), new Vector2(0), new Vector2(-5, -10) };
 
+        /// <summary>
+        /// The frame number for the animation.
+        /// </summary>
         private int animFrameNumber;
+
+        /// <summary>
+        /// The frame timer for the animation.
+        /// </summary>
         private int animFrameTimer;
 
+        /// <summary>
+        /// The boolean to tell if the player should be animated.
+        /// </summary>
         private bool animate = false;
 
         /// <summary>
