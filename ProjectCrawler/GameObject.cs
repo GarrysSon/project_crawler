@@ -4,12 +4,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ProjectCrawler
 {
-    public interface GameObject
+    public abstract class GameObject
     {
         /// <summary>
         /// Object position.
         /// </summary>
-        Vector2 Position
+        protected Vector2 position;
+        public Vector2 Position
         {
             get;
         }
@@ -17,7 +18,8 @@ namespace ProjectCrawler
         /// <summary>
         /// Rectangle defining bounding box of object.
         /// </summary>
-        Rectangle BoundingBox
+        protected Rectangle boundingBox;
+        public Rectangle BoundingBox
         {
             get;
         }
@@ -25,11 +27,11 @@ namespace ProjectCrawler
         /// <summary>
         /// Updates the object.
         /// </summary>
-        void Update();
+        public abstract void Update();
 
         /// <summary>
         /// Renders the object.
         /// </summary>
-        void Render();
+        public abstract void Render();
     }
 }

@@ -44,8 +44,6 @@ namespace ProjectCrawler
         /// </summary>
         public override void Render()
         {
-            base.Render();
-
             Renderer.DrawSprite(
                 "funnyEnemy", 
                 position + FRAME_POS_OFFSETS[animFrameNumber], 
@@ -65,8 +63,6 @@ namespace ProjectCrawler
         /// </summary>
         public override void Update()
         {
-            base.Update();
-
             // Update the path
             if (++pathFrameTimer == PATH_DURATIONS[pathFrameNumber])
             {

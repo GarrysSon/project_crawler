@@ -63,16 +63,6 @@ namespace ProjectCrawler
         public int Level { get; set; }
 
         /// <summary>
-        /// The Player's current position.
-        /// </summary>
-        private Vector2 position;
-
-        /// <summary>
-        /// The Player's bounding box.
-        /// </summary>
-        private Rectangle boundingBox;
-
-        /// <summary>
         /// The default constructor for the Player object.
         /// </summary>
         public Player()
@@ -84,25 +74,9 @@ namespace ProjectCrawler
         }
 
         /// <summary>
-        /// The getter for the position of the Player.
-        /// </summary>
-        public Vector2 Position
-        {
-            get { return this.position; }
-        }
-
-        /// <summary>
-        /// The getter for the bounding box of the Player.
-        /// </summary>
-        public Rectangle BoundingBox
-        {
-            get { return this.boundingBox; }
-        }
-
-        /// <summary>
         /// The update method for the Player.
         /// </summary>
-        public void Update()
+        public override void Update()
         {
             // This is where all the fun happens for the player and the 
             // player related things...like when the player walks into a bar,
@@ -187,7 +161,7 @@ namespace ProjectCrawler
         /// <summary>
         /// The render method for the Player.
         /// </summary>
-        public void Render()
+        public override void Render()
         {
             // This is the renderer you know...no more jokes.
             // Draw the ninja!

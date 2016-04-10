@@ -17,31 +17,5 @@ namespace ProjectCrawler
                 return health;
             }
         }
-
-        protected Rectangle boundingBox;
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                return boundingBox;
-            }
-        }
-
-        protected Vector2 position;
-        public Vector2 Position
-        {
-            get
-            {
-                return position;
-            }
-        }
-
-        public virtual void Render()
-        {
-        }
-
-        public virtual void Update()
-        {
-        }
     }
 }
