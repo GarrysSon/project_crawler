@@ -42,6 +42,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="GameLevel.cs" />
     <Compile Include="GameObjectManager.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="FunnyEnemy.cs" />
