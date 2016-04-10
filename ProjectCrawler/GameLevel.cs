@@ -108,6 +108,16 @@ namespace ProjectCrawler
             this.InitializeBase();
         }
 
+        /// <summary>
+        /// Called by LevelManager when this level is set as the current level.
+        /// </summary>
+        public abstract void OnActivation();
+
+        /// <summary>
+        /// Called by LevelManager when this level is removed as the current level.
+        /// </summary>
+        public abstract void OnDeactivation();
+
         private void InitializeBase()
         {
             this.gameObjects = new List<GameObject>();
