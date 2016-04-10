@@ -18,12 +18,16 @@ namespace ProjectCrawler
         protected Dictionary<Type, List<GameObject>> typedGameObjects;
 
         /// <summary>
+        /// A list of all objects to be deregistered from the level.
+        /// </summary>
+        protected List<GameObject> deregisteredObjects;
+
+        /// <summary>
         /// Base constructor.
         /// </summary>
         public GameLevel()
         {
-            this.gameObjects = new List<GameObject>();
-            this.typedGameObjects = new Dictionary<Type, List<GameObject>>();
+            this.InitializeBase();
         }
 
         /// <summary>
@@ -46,6 +50,15 @@ namespace ProjectCrawler
         }
 
         /// <summary>
+        /// Deregisters the given game object at the end of the current frame.
+        /// </summary>
+        /// <param name="GO">The game object to deregister.</param>
+        public void DeregisterGameObject(GameObject GO)
+        {
+            this.deregisteredObjects.Add(GO);
+        }
+
+        /// <summary>
         /// Retrieves all game objects of type T.
         /// </summary>
         /// <typeparam name="T">The type of game objects to retrieve.</typeparam>
@@ -53,6 +66,53 @@ namespace ProjectCrawler
         public List<T> GetObjectsOfType<T>()
         {
             return this.typedGameObjects[typeof(T)] as List<T>;
+        }
+
+        /// <summary>
+        /// Updates the level and registered objects.
+        /// </summary>
+        public virtual void Update()
+        {
+            // Update each of the game objects
+            foreach (GameObject g in this.gameObjects)
+            {
+                if (!this.deregisteredObjects.Contains(g))
+                {
+                    g.Update();
+                }
+            }
+
+            // Deregister any pending objects
+            foreach (GameObject g in this.deregisteredObjects)
+            {
+                this.gameObjects.Remove(g);
+            }
+        }
+
+        /// <summary>
+        /// Renders the objects in the level.
+        /// </summary>
+        public virtual void Render()
+        {
+            foreach (GameObject g in this.gameObjects)
+            {
+                g.Render();
+            }
+        }
+
+        /// <summary>
+        /// Resets the level to an intial state.
+        /// </summary>
+        public virtual void Reset()
+        {
+            this.InitializeBase();
+        }
+
+        private void InitializeBase()
+        {
+            this.gameObjects = new List<GameObject>();
+            this.typedGameObjects = new Dictionary<Type, List<GameObject>>();
+            this.deregisteredObjects = new List<GameObject>();
         }
     }
 }
