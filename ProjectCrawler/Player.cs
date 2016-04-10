@@ -31,9 +31,9 @@ namespace ProjectCrawler
         /// <summary>
         /// Variables used for sizing and shadow drawing
         /// </summary>
-        private readonly Vector2 SIZE = new Vector2(64);
-        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 32);
-        private readonly Vector2 SHADOW_SIZE = new Vector2(80, 40);
+        private readonly Vector2 SIZE = new Vector2(48);
+        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 24);
+        private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         /// <summary>
         /// The frame number for the animation.
@@ -65,9 +65,9 @@ namespace ProjectCrawler
         /// <summary>
         /// The default constructor for the Player object.
         /// </summary>
-        public Player()
+        public Player(Vector2 StartPosition)
         {
-            this.position = new Vector2();
+            this.position = StartPosition;
             this.boundingBox = new Rectangle();
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;

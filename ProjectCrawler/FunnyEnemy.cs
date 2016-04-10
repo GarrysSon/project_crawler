@@ -15,9 +15,9 @@ namespace ProjectCrawler
         private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.05f, 0.0f, -0.05f };
         private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(3, -6), new Vector2(0), new Vector2(-3, -6) };
 
-        private readonly Vector2 SIZE = new Vector2(64);
-        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 32);
-        private readonly Vector2 SHADOW_SIZE = new Vector2(80, 40);
+        private readonly Vector2 SIZE = new Vector2(48);
+        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 24);
+        private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         private int pathFrameNumber;
         private int pathFrameTimer;

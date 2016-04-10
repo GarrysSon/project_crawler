@@ -16,6 +16,7 @@ namespace ProjectCrawler
         private static GraphicsDevice gd;
         private static SpriteBatch spriteBatch;
         private static Dictionary<string, Texture2D> textures;
+        private static Dictionary<string, RenderTarget2D> renderTargets;
 
         /// <summary>
         /// Initializes the Renderer to do its job.
@@ -28,6 +29,7 @@ namespace ProjectCrawler
             gd = GD;
             spriteBatch = new SpriteBatch(gd);
             textures = new Dictionary<string, Texture2D>();
+            renderTargets = new Dictionary<string, RenderTarget2D>();
         }
 
         /// <summary>
@@ -38,6 +40,26 @@ namespace ProjectCrawler
         public static void LoadImage(string Tag, string Path)
         {
             textures[Tag] = cm.Load<Texture2D>(Path);
+        }
+
+        /// <summary>
+        /// Adds a new render target.
+        /// </summary>
+        /// <param name="Tag">Tag to associate with the render target.</param>
+        /// <param name="Width">Width of the render target.</param>
+        /// <param name="Height">Height of the render target.</param>
+        public static void AddRenderTarget(string Tag, int Width, int Height)
+        {
+            renderTargets[Tag] = new RenderTarget2D(gd, Width, Height);
+        }
+
+        /// <summary>
+        /// Sets the currently active render target.
+        /// </summary>
+        /// <param name="Tag">Tag of the render target to set.</param>
+        public static void SetRenderTarget(string Tag = null)
+        {
+            gd.SetRenderTarget(Tag == null ? null : renderTargets[Tag]);
         }
 
         /// <summary>
