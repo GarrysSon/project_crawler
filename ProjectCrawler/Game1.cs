@@ -40,8 +40,10 @@ namespace ProjectCrawler
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
             Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
             Renderer.LoadImage("dropShadow", "Images/dropShadow");
-            GameObjectManager.AddObject("ninja", new Player(new Vector2(400, 240)));
-            GameObjectManager.AddObject("enemy", new FunnyEnemy(new Vector2(100.0f)));
+
+            // Setup the levels
+            LevelManager.RegisterGameLevel(GlobalConstants.MAIN_AREA_TAG, new MainArea());
+            LevelManager.ActivateLevel(GlobalConstants.MAIN_AREA_TAG);
         }
 
         /// <summary>
@@ -63,8 +65,8 @@ namespace ProjectCrawler
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            ((Player)GameObjectManager.GetObject("ninja")).Update();
-            ((FunnyEnemy)GameObjectManager.GetObject("enemy")).Update();
+            // Update the current level
+            LevelManager.UpdateCurrentLevel();
 
             base.Update(gameTime);
         }
@@ -75,13 +77,8 @@ namespace ProjectCrawler
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.BurlyWood);
-
-            // Begin rendering all the shiz.
-            Renderer.BeginRender();
-            ((Player)GameObjectManager.GetObject("ninja")).Render();
-            ((FunnyEnemy)GameObjectManager.GetObject("enemy")).Render();
-            Renderer.EndRender();
+            // Render the current level
+            LevelManager.RenderCurrentLevel();
 
             base.Draw(gameTime);
         }

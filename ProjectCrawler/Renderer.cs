@@ -77,6 +77,15 @@ namespace ProjectCrawler
         }
 
         /// <summary>
+        /// Clear the screen to a given color.
+        /// </summary>
+        /// <param name="C">The color to clear the screen to.</param>
+        public static void ClearScreen(Color C)
+        {
+            gd.Clear(C);
+        }
+
+        /// <summary>
         /// Draws a sprite at a given location with a given size.
         /// </summary>
         /// <param name="Tag">Tag of a previously loaded image.</param>
@@ -96,6 +105,11 @@ namespace ProjectCrawler
                 Depth);
         }
 
+        /// <summary>
+        /// Generates a depth value based on a position, with depth decreasing as Y increases.
+        /// </summary>
+        /// <param name="Position">Position to generate depth from.</param>
+        /// <returns></returns>
         public static float GenerateDepthFromScreenPosition(Vector2 Position)
         {
             return 1.0f - Position.Y / (float)gd.Viewport.Height;

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjectCrawler
 {
@@ -12,24 +9,11 @@ namespace ProjectCrawler
         /// The current game level.
         /// </summary>
         private static GameLevel currentLevel;
-        public static GameLevel CurrentLevel
-        {
-            get
-            {
-                return currentLevel;
-            }
-            set
-            {
-                currentLevel.OnDeactivation();
-                currentLevel = value;
-                currentLevel.OnActivation();
-            }
-        }
 
         /// <summary>
         /// A collection of all levels registered with the manager.
         /// </summary>
-        private static Dictionary<String, GameLevel> gameLevels;
+        private static Dictionary<string, GameLevel> gameLevels;
 
         /// <summary>
         /// Static constructor.
@@ -44,9 +28,23 @@ namespace ProjectCrawler
         /// </summary>
         /// <param name="Tag">Tag to associate with the level.</param>
         /// <param name="Level">The level to register.</param>
-        public static void RegisterGameLevel(String Tag, GameLevel Level)
+        public static void RegisterGameLevel(string Tag, GameLevel Level)
         {
             gameLevels[Tag] = Level;
+        }
+
+        /// <summary>
+        /// Activates and sets as current the level associated with the given tag.
+        /// </summary>
+        /// <param name="Tag">The tag of the level to activate.</param>
+        public static void ActivateLevel(string Tag)
+        {
+            if (currentLevel != null)
+            {
+                currentLevel.OnDeactivation();
+            }
+            currentLevel = gameLevels[Tag];
+            currentLevel.OnActivation();
         }
 
         /// <summary>
@@ -62,7 +60,9 @@ namespace ProjectCrawler
         /// </summary>
         public static void RenderCurrentLevel()
         {
+            Renderer.BeginRender();
             currentLevel.Render();
+            Renderer.EndRender();
         }
     }
 }
