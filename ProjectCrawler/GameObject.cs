@@ -4,24 +4,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ProjectCrawler
 {
-    public abstract class GameObject
+    public abstract class GameObject : Polygon
     {
         /// <summary>
-        /// Object position.
+        /// Default constructor.
         /// </summary>
-        protected Vector2 position;
-        public Vector2 Position
+        public GameObject()
         {
-            get;
         }
 
         /// <summary>
-        /// Rectangle defining bounding box of object.
+        /// Constructor taking a polygon.
         /// </summary>
-        protected Rectangle boundingBox;
-        public Rectangle BoundingBox
+        /// <param name="Poly">Polygon for this object to use.</param>
+        public GameObject(Polygon Poly) : base(Poly.Points, Poly.Position)
         {
-            get;
         }
 
         /// <summary>

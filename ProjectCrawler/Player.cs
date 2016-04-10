@@ -31,8 +31,10 @@ namespace ProjectCrawler
         /// <summary>
         /// Variables used for sizing and shadow drawing
         /// </summary>
-        private readonly Vector2 SIZE = new Vector2(48);
-        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, 24);
+        private const int WIDTH = 48;
+        private const int HEIGHT = 48;
+        private readonly Vector2 SIZE = new Vector2(WIDTH, HEIGHT);
+        private readonly Vector2 SHADOW_OFFSET = new Vector2(0, HEIGHT / 2);
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         /// <summary>
@@ -65,10 +67,8 @@ namespace ProjectCrawler
         /// <summary>
         /// The default constructor for the Player object.
         /// </summary>
-        public Player(Vector2 StartPosition)
+        public Player(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
-            this.position = StartPosition;
-            this.boundingBox = new Rectangle();
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
         }
