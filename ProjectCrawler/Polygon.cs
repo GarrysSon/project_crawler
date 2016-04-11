@@ -2,6 +2,11 @@
 
 namespace ProjectCrawler
 {
+    /// <summary>
+    /// Represents a polygon made up of vertices(points) and a position.
+    /// If vertices are placed in clockwise order, then surface normals 
+    /// will point inward; the opposite is true for counter-clockwise.
+    /// </summary>
     public class Polygon
     {
         /// <summary>
