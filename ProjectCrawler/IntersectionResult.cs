@@ -19,6 +19,15 @@ namespace ProjectCrawler
             }
         }
 
+        private Vector2 surface;
+        public Vector2 Surface
+        {
+            get
+            {
+                return surface;
+            }
+        }
+
         /// <summary>
         /// Penetration depth past the intersected surface.
         /// </summary>
@@ -34,11 +43,13 @@ namespace ProjectCrawler
         /// <summary>
         /// Constructor/
         /// </summary>
-        /// <param name="SurfaceNormal">Surface normal of intersected surface.</param>
+        /// <param name="Surface">Surface vector that was intersected</param>
         /// <param name="Distance">Penetration distance past intersected surface.</param>
-        public IntersectionResult(Vector2 SurfaceNormal, float Distance)
+        public IntersectionResult(Vector2 Surface, float Distance)
         {
-            this.surfaceNormal = SurfaceNormal;
+            this.surface = Surface;
+            this.surface.Normalize();
+            this.surfaceNormal = new Vector2(this.surface.Y * -1, this.surface.X);
             this.distance = Distance;
         }
     }

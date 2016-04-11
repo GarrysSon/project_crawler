@@ -131,8 +131,7 @@ namespace ProjectCrawler
                 }
             }
 
-            Vector2 surfaceNormal = new Vector2(surfaceVector.Y * -1, surfaceVector.X);
-            return isIntersecting ? new IntersectionResult(surfaceNormal, Motion.Length() * minReach) : null;
+            return isIntersecting ? new IntersectionResult(surfaceVector, Motion.Length() * minReach) : null;
         }
 
         /// <summary>

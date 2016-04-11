@@ -120,7 +120,6 @@ namespace ProjectCrawler
             // Move up if the W key is pressed.
             if(currentState.IsKeyDown(Keys.W))
             {
-                this.position.Y += -PLAYER_SPEED;
                 this.animate = true;
                 motion.Y = -1f;
             }
@@ -128,7 +127,6 @@ namespace ProjectCrawler
             // Move left if the A key is pressed.
             if(currentState.IsKeyDown(Keys.A))
             {
-                this.position.X += -PLAYER_SPEED;
                 this.animate = true;
                 motion.X = -1f;
             }
@@ -136,7 +134,6 @@ namespace ProjectCrawler
             // Move down if the S key is pressed.
             if(currentState.IsKeyDown(Keys.S))
             {
-                this.position.Y += PLAYER_SPEED;
                 this.animate = true;
                 motion.Y = 1f;
             }
@@ -144,13 +141,16 @@ namespace ProjectCrawler
             // Move right if the D key is pressed.
             if(currentState.IsKeyDown(Keys.D))
             {
-                this.position.X += PLAYER_SPEED;
                 this.animate = true;
                 motion.X = 1f;
             }
 
-            // Normalize the motion vector
-            motion.Normalize();
+            // Normalize the motion vector if the Player moved.
+            if (this.animate)
+            {
+                motion.Normalize();
+            }
+            // this.position += motion * PLAYER_SPEED;
 
             // Checking if we should animate the movement.
             if (this.animate)
@@ -167,13 +167,21 @@ namespace ProjectCrawler
                 animFrameNumber = 0;
             }
 
-            // Check for a collision with the wall of the current level
-            // TODO: This can be done better later.
+            // See if the Player's motion will intersect the wall.
             PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
-            while (this.IsIntersectingPolygon(wall))
+            IntersectionResult result = this.IsMotionIntersectingPolygon(motion * PLAYER_SPEED, wall);
+            if (result != null)
             {
-                // Push in the opposite direction of motion until not intersecting.
-                this.position += motion * -1f;
+                // Find the amount the Player should slide relative to the wall.
+                Vector2 slide = (PLAYER_SPEED - result.Distance) * result.Surface * Vector2.Dot(motion, result.Surface);
+                // Set the motion to move to the wall then slide.
+                motion = motion * (result.Distance - 2f) + slide;
+                // Move the player object.
+                this.position += motion;
+            }
+            else
+            {
+                this.position += motion * PLAYER_SPEED;
             }
         }
 
