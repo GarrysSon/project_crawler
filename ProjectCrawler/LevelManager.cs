@@ -8,6 +8,13 @@ namespace ProjectCrawler
         /// The current game level.
         /// </summary>
         private static GameLevel currentLevel;
+        public static GameLevel CurrentLevel
+        {
+            get
+            {
+                return currentLevel;
+            }
+        }
 
         /// <summary>
         /// A collection of all levels registered with the manager.

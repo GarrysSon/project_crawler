@@ -21,6 +21,11 @@ namespace ProjectCrawler
         protected List<GameObject> deregisteredObjects;
 
         /// <summary>
+        /// Stores arbitrary objects associated with string keys(tags).
+        /// </summary>
+        private Dictionary<string, object> keyValueStore;
+
+        /// <summary>
         /// Base constructor.
         /// </summary>
         public GameLevel()
@@ -107,6 +112,27 @@ namespace ProjectCrawler
         }
 
         /// <summary>
+        /// Stores a value associated with a tag.
+        /// </summary>
+        /// <param name="Tag">Tag to associate with the value.</param>
+        /// <param name="Value">Value to store.</param>
+        public void StoreValue(string Tag, object Value)
+        {
+            this.keyValueStore[Tag] = Value;
+        }
+
+        /// <summary>
+        /// Retrieves the value associated with the given tag.
+        /// </summary>
+        /// <typeparam name="T">Type to retrieve the value as.</typeparam>
+        /// <param name="Tag">Tag associated with the value to retrieve.</param>
+        /// <returns></returns>
+        public T RetrieveValue<T>(string Tag)
+        {
+            return (T)this.keyValueStore[Tag];
+        }
+
+        /// <summary>
         /// Called by LevelManager when this level is set as the current level.
         /// </summary>
         public abstract void OnActivation();
@@ -121,6 +147,7 @@ namespace ProjectCrawler
             this.gameObjects = new List<GameObject>();
             this.typedGameObjects = new Dictionary<Type, List<GameObject>>();
             this.deregisteredObjects = new List<GameObject>();
+            this.keyValueStore = new Dictionary<string, object>();
         }
     }
 }

@@ -18,6 +18,9 @@ namespace ProjectCrawler
             this.RegisterGameObject(new FunnyEnemy(new Vector2(100.0f)));
         }
 
+        /// <summary>
+        /// Renders the level.
+        /// </summary>
         public override void Render()
         {
             // Clear the screen to a brownish color
