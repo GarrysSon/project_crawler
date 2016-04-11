@@ -150,7 +150,7 @@ namespace ProjectCrawler
         }
 
         /// <summary>
-        /// Creates a polygon with a rectangle shape.
+        /// Creates a polygon with a rectangle shape and outward pointing normals.
         /// </summary>
         /// <param name="Width">Width of the rectangle.</param>
         /// <param name="Height">Height of the rectangle.</param>
@@ -164,9 +164,9 @@ namespace ProjectCrawler
                 new Vector2[] 
                 {
                     new Vector2(-halfWidth, -halfHeight),
-                    new Vector2(halfWidth, -halfHeight),
+                    new Vector2(-halfWidth, halfHeight),
                     new Vector2(halfWidth, halfHeight),
-                    new Vector2(-halfWidth, halfHeight)
+                    new Vector2(halfWidth, -halfHeight)
                 },
                 Position);
         }
