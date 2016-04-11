@@ -53,7 +53,6 @@ namespace ProjectCrawler
         /// Checks to see if there is intersection between this and another polygon.
         /// </summary>
         /// <param name="P">Another polygon to check for an intersection with.</param>
-        /// <param name="PositionDiff">The difference in position between this and the other polygon.</param>
         /// <returns></returns>
         public bool IsIntersectingPolygon(Polygon P)
         {
@@ -85,6 +84,55 @@ namespace ProjectCrawler
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Checks to see if there is an intersection between the motion of this
+        /// polygon and the bounds of another.
+        /// </summary>
+        /// <param name="Motion">Motion of this polygon.</param>
+        /// <param name="P">Another polygon to check for an intersection with.</param>
+        /// <returns>The result of an intersection if there was one, otherwise null.</returns>
+        public IntersectionResult IsMotionIntersectingPolygon(Vector2 Motion, Polygon P)
+        {
+            Vector2[] aPoints = this.GetPositionAdjustedPoints();
+            float minReach = 1;
+            bool isIntersecting = false;
+            Vector2 surfaceVector = Vector2.Zero;
+
+            for (int i = 0; i < aPoints.Length; i++)
+            {
+                Vector2 A = aPoints[i];
+                Vector2 B = aPoints[i] + Motion;
+                Vector2 b = B - A;
+                Vector2 bPerp = new Vector2(b.Y * -1, b.X);
+
+                Vector2[] bPoints = P.GetPositionAdjustedPoints();
+                for (int j = 0; j < bPoints.Length; j++)
+                {
+                    Vector2 C = bPoints[j];
+                    Vector2 D = bPoints[(j + 1) % bPoints.Length];
+                    Vector2 d = D - C;
+                    Vector2 c = C - A;
+                    Vector2 dPerp = new Vector2(d.Y * -1, d.X);
+
+                    float t = Vector2.Dot(dPerp, c) / Vector2.Dot(dPerp, b);
+                    float u = Vector2.Dot(bPerp, c) / Vector2.Dot(dPerp, b);
+
+                    if (u >= 0 && u <= 1 && t >= 0 && t <= 1)
+                    {
+                        isIntersecting = true;
+                        if (t <= minReach)
+                        {
+                            minReach = t;
+                            surfaceVector = C - D;
+                        }
+                    }
+                }
+            }
+
+            Vector2 surfaceNormal = new Vector2(surfaceVector.Y * -1, surfaceVector.X);
+            return isIntersecting ? new IntersectionResult(surfaceNormal, Motion.Length() * minReach) : null;
         }
 
         /// <summary>

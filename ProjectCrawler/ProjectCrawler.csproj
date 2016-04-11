@@ -49,6 +49,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GlobalConstants.cs" />
+    <Compile Include="IntersectionResult.cs" />
     <Compile Include="LevelManager.cs" />
     <Compile Include="MainArea.cs" />
     <Compile Include="Player.cs" />
