@@ -16,6 +16,23 @@ namespace ProjectCrawler
             this.RegisterGameObject(new Player(new Vector2(400, 240)));
             // Add an enemy.
             this.RegisterGameObject(new FunnyEnemy(new Vector2(100.0f)));
+            // Add a PolyWall as a test.
+            Polygon wallShape = new Polygon(
+                new Vector2[]
+                {
+                    new Vector2(-350, -100),
+                    new Vector2(-250, -190),
+                    new Vector2(250, -190),
+                    new Vector2(350, -100),
+                    new Vector2(350, 100),
+                    new Vector2(250, 190),
+                    new Vector2(-250, 190),
+                    new Vector2(-350, 100)
+                },
+                new Vector2(400, 240));
+            PolyWall wallObject = new PolyWall(wallShape);
+            this.RegisterGameObject(wallObject);
+            this.StoreValue(GlobalConstants.TEST_WALL_TAG, wallObject);
         }
 
         /// <summary>

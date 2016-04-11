@@ -40,6 +40,7 @@ namespace ProjectCrawler
             Renderer.LoadImage("ninja", "Images/ninjaAttempt2");
             Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
             Renderer.LoadImage("dropShadow", "Images/dropShadow");
+            Renderer.LoadImage("blank", "Images/blank");
 
             // Setup the levels
             LevelManager.RegisterGameLevel(GlobalConstants.MAIN_AREA_TAG, new MainArea());

@@ -114,11 +114,15 @@ namespace ProjectCrawler
             // Reset the animation boolean.
             this.animate = false;
 
+            // Motion vector
+            Vector2 motion = Vector2.Zero;
+
             // Move up if the W key is pressed.
             if(currentState.IsKeyDown(Keys.W))
             {
                 this.position.Y += -PLAYER_SPEED;
                 this.animate = true;
+                motion.Y = -1f;
             }
 
             // Move left if the A key is pressed.
@@ -126,6 +130,7 @@ namespace ProjectCrawler
             {
                 this.position.X += -PLAYER_SPEED;
                 this.animate = true;
+                motion.X = -1f;
             }
 
             // Move down if the S key is pressed.
@@ -133,6 +138,7 @@ namespace ProjectCrawler
             {
                 this.position.Y += PLAYER_SPEED;
                 this.animate = true;
+                motion.Y = 1f;
             }
 
             // Move right if the D key is pressed.
@@ -140,7 +146,11 @@ namespace ProjectCrawler
             {
                 this.position.X += PLAYER_SPEED;
                 this.animate = true;
+                motion.X = 1f;
             }
+
+            // Normalize the motion vector
+            motion.Normalize();
 
             // Checking if we should animate the movement.
             if (this.animate)
@@ -155,6 +165,15 @@ namespace ProjectCrawler
             else
             {
                 animFrameNumber = 0;
+            }
+
+            // Check for a collision with the wall of the current level
+            // TODO: This can be done better later.
+            PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
+            while (this.IsIntersectingPolygon(wall))
+            {
+                // Push in the opposite direction of motion until not intersecting.
+                this.position += motion * -1f;
             }
         }
 
