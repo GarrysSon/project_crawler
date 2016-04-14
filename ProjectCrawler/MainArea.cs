@@ -13,7 +13,12 @@ namespace ProjectCrawler
         public MainArea() : base()
         {
             // Add a player character.
-            this.RegisterGameObject(new Player(new Vector2(400, 240)));
+            Player player = new Player(new Vector2(400, 240));
+            this.RegisterGameObject(player);
+            // Add a camera to follow the player
+            SmoothCamera smoothCamera = new SmoothCamera(player.Position, player, 0.95f);
+            this.camera = smoothCamera;
+            this.RegisterGameObject(Camera);
             // Add an enemy.
             this.RegisterGameObject(new FunnyEnemy(new Vector2(100.0f)));
             // Add a PolyWall as a test.

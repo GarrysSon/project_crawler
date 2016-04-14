@@ -25,6 +25,8 @@ namespace ProjectCrawler
         {
             cm = CM;
             gd = GD;
+            gd.PresentationParameters.BackBufferWidth = GlobalConstants.WINDOW_WIDTH;
+            gd.PresentationParameters.BackBufferHeight = GlobalConstants.WINDOW_HEIGHT;
             spriteBatch = new SpriteBatch(gd);
             textures = new Dictionary<string, Texture2D>();
             renderTargets = new Dictionary<string, RenderTarget2D>();
@@ -63,9 +65,9 @@ namespace ProjectCrawler
         /// <summary>
         /// Begins a rendering cycle, typically for a frame.
         /// </summary>
-        public static void BeginRender()
+        public static void BeginRender(Matrix? Transformation = null)
         {
-            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront);
+            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: Transformation);
         }
 
         /// <summary>

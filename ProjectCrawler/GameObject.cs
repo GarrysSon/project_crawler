@@ -9,7 +9,7 @@ namespace ProjectCrawler
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public GameObject()
+        public GameObject() : base()
         {
         }
 

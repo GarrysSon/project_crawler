@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace ProjectCrawler
 {
@@ -66,7 +67,12 @@ namespace ProjectCrawler
         /// </summary>
         public static void RenderCurrentLevel()
         {
-            Renderer.BeginRender();
+            Renderer.BeginRender(
+                Matrix.CreateTranslation(
+                    new Vector3(
+                        -(currentLevel.ScrollPoint.X - GlobalConstants.WINDOW_WIDTH / 2), 
+                        -(currentLevel.ScrollPoint.Y - GlobalConstants.WINDOW_HEIGHT / 2), 
+                        0)));
             currentLevel.Render();
             Renderer.EndRender();
         }

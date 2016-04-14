@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace ProjectCrawler
 {
@@ -24,6 +25,34 @@ namespace ProjectCrawler
         /// Stores arbitrary objects associated with string keys(tags).
         /// </summary>
         private Dictionary<string, object> keyValueStore;
+
+        /// <summary>
+        /// A GameObject to which the camera should scroll.
+        /// </summary>
+        protected AbstractCamera camera;
+        public AbstractCamera Camera
+        {
+            get
+            {
+                return this.camera;
+            }
+            set
+            {
+                this.camera = value;
+            }
+        }
+
+        public Vector2 ScrollPoint
+        {
+            get
+            {
+                if (this.camera != null)
+                {
+                    return this.camera.Position;
+                }
+                return GlobalConstants.WINDOW_SIZE / 2f;
+            }
+        }
 
         /// <summary>
         /// Base constructor.

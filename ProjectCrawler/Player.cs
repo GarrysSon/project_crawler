@@ -69,6 +69,7 @@ namespace ProjectCrawler
         /// </summary>
         public Player(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
+            // Default animation values.
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
         }

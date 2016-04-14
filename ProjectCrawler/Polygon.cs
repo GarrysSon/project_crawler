@@ -33,6 +33,9 @@ namespace ProjectCrawler
             }
         }
 
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public Polygon()
         {
             this.points = new Vector2[0];
