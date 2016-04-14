@@ -106,9 +106,11 @@ namespace ProjectCrawler.Objects.Generic.GameBase
         /// </summary>
         public virtual void Update()
         {
-            // Update each of the game objects
-            foreach (GameObject g in this.gameObjects)
+            // Update each of the game objects.
+            // Objects can be registered here, so we can't use foreach.
+            for (int i = 0; i < this.gameObjects.Count; i++)
             {
+                GameObject g = this.gameObjects[i];
                 if (!this.deregisteredObjects.Contains(g))
                 {
                     g.Update();

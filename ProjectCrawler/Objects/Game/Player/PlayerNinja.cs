@@ -5,6 +5,7 @@ using ProjectCrawler.Management;
 using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Generic.Utility;
 using ProjectCrawler.Objects.Game.Level.Component;
+using ProjectCrawler.Objects.Game.Player.Weapon;
 
 namespace ProjectCrawler.Objects.Game.Player
 {
@@ -40,6 +41,11 @@ namespace ProjectCrawler.Objects.Game.Player
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         /// <summary>
+        /// Weapon constants.
+        /// </summary>
+        private const int SHURIKEN_RECHARGE_TIME = 15;
+
+        /// <summary>
         /// The frame number for the animation.
         /// </summary>
         private int animFrameNumber;
@@ -53,6 +59,11 @@ namespace ProjectCrawler.Objects.Game.Player
         /// The boolean to tell if the player should be animated.
         /// </summary>
         private bool animate = false;
+
+        /// <summary>
+        /// Frames until another shuriken can be fired.
+        /// </summary>
+        private int fireTimer;
 
         /// <summary>
         /// The Player's health.
@@ -74,6 +85,7 @@ namespace ProjectCrawler.Objects.Game.Player
             // Default animation values.
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
+            this.fireTimer = 0;
         }
 
         /// <summary>
@@ -185,6 +197,40 @@ namespace ProjectCrawler.Objects.Game.Player
             else
             {
                 this.position += motion * PLAYER_SPEED;
+            }
+
+            // Shuriken can be fired if the fire timer equals 0.
+            if (fireTimer == 0)
+            {
+                // Fire left if left is pressed
+                if (currentState.IsKeyDown(Keys.Left))
+                {
+                    fireTimer = SHURIKEN_RECHARGE_TIME;
+                    LevelManager.CurrentLevel.RegisterGameObject(
+                        new Shuriken(this.position, new Vector2(-1, 0)));
+                }
+                else if (currentState.IsKeyDown(Keys.Up))
+                {
+                    fireTimer = SHURIKEN_RECHARGE_TIME;
+                    LevelManager.CurrentLevel.RegisterGameObject(
+                        new Shuriken(this.position, new Vector2(0, -1)));
+                }
+                else if (currentState.IsKeyDown(Keys.Right))
+                {
+                    fireTimer = SHURIKEN_RECHARGE_TIME;
+                    LevelManager.CurrentLevel.RegisterGameObject(
+                        new Shuriken(this.position, new Vector2(1, 0)));
+                }
+                else if (currentState.IsKeyDown(Keys.Down))
+                {
+                    fireTimer = SHURIKEN_RECHARGE_TIME;
+                    LevelManager.CurrentLevel.RegisterGameObject(
+                        new Shuriken(this.position, new Vector2(0, 1)));
+                }
+            }
+            else
+            {
+                fireTimer--;
             }
         }
 
