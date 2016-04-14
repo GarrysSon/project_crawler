@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProjectCrawler.Management;
+using ProjectCrawler.Objects.Game.Level;
 
 namespace ProjectCrawler
 {
@@ -26,7 +27,6 @@ namespace ProjectCrawler
         protected override void Initialize()
         {
             Renderer.Init(this.Content, this.GraphicsDevice);
-            GameObjectManager.Init();
             base.Initialize();
         }
 

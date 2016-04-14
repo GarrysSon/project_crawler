@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Management
 {
     /// <summary>
     /// Facilitates handling and drawing of images.

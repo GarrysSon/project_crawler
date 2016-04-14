@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using ProjectCrawler.Management;
+using ProjectCrawler.Objects.Generic.Utility;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Game.Enemy
 {
-    public class FunnyEnemy : Enemy
+    public class FunnyEnemy : AbstractEnemy
     {
         private const int MAX_HEALTH = 10;
 

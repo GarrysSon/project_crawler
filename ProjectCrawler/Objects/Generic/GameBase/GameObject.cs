@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using ProjectCrawler.Objects.Generic.Utility;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.GameBase
 {
     public abstract class GameObject : Polygon
     {

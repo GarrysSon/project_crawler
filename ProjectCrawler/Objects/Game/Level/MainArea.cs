@@ -1,6 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using ProjectCrawler.Management;
+using ProjectCrawler.Objects.Generic.Camera;
+using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Generic.Utility;
+using ProjectCrawler.Objects.Game.Player;
+using ProjectCrawler.Objects.Game.Enemy;
+using ProjectCrawler.Objects.Game.Level.Component;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Game.Level
 {
     /// <summary>
     /// The main area of the game where the actual gameplay takes place.
@@ -13,7 +20,7 @@ namespace ProjectCrawler
         public MainArea() : base()
         {
             // Add a player character.
-            Player player = new Player(new Vector2(400, 240));
+            PlayerNinja player = new PlayerNinja(new Vector2(400, 240));
             this.RegisterGameObject(player);
             // Add a camera to follow the player
             SmoothCamera smoothCamera = new SmoothCamera(player.Position, player, 0.95f);

@@ -1,19 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Generic.Utility;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Game.Enemy
 {
     /// <summary>
     /// Represents an abstract enemy.
     /// </summary>
-    public abstract class Enemy : GameObject
+    public abstract class AbstractEnemy : GameObject
     {
         /// <summary>
         /// Constructor taking the polygon shape of the enemy.
         /// </summary>
         /// <param name="Poly"></param>
-        public Enemy(Polygon Poly) : base(Poly)
+        public AbstractEnemy(Polygon Poly) : base(Poly)
         {
         }
 

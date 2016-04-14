@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using ProjectCrawler.Objects.Generic.GameBase;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.Camera
 {
     /// <summary>
     /// Abstract camera class.

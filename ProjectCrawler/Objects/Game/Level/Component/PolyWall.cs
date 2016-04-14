@@ -1,7 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using ProjectCrawler.Management;
+using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Generic.Utility;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Game.Level.Component
 {
     /// <summary>
     /// Represents a polygonal wall, used for testing.

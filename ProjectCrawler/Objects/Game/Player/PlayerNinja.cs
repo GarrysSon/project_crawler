@@ -1,15 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.ComponentModel;
+using ProjectCrawler.Management;
+using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Generic.Utility;
+using ProjectCrawler.Objects.Game.Level.Component;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Game.Player
 {
     /// <summary>
     /// Class representing a player object.
     /// </summary>
-    public class Player : GameObject
+    public class PlayerNinja : GameObject
     {
         /// <summary>
         /// The max health alotted to the player character.
@@ -67,7 +69,7 @@ namespace ProjectCrawler
         /// <summary>
         /// The default constructor for the Player object.
         /// </summary>
-        public Player(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
+        public PlayerNinja(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
             // Default animation values.
             this.animFrameNumber = 0;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.Utility
 {
     /// <summary>
     /// Represents a polygon made up of vertices(points) and a position.

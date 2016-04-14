@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using ProjectCrawler.Objects.Generic.Camera;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.GameBase
 {
     public abstract class GameLevel
     {

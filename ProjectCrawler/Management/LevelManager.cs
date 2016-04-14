@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using ProjectCrawler.Objects.Generic.GameBase;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Management
 {
     public class LevelManager
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
+using ProjectCrawler.Objects.Generic.GameBase;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.Camera
 {
     /// <summary>
     /// A camera that smoothly follows a specified object.

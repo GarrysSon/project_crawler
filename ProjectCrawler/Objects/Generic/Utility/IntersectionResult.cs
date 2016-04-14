@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ProjectCrawler
+namespace ProjectCrawler.Objects.Generic.Utility
 {
     /// <summary>
     /// Represents teh result of an intersection between two vectors.
