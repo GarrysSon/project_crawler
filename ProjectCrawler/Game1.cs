@@ -41,6 +41,7 @@ namespace ProjectCrawler
             Renderer.LoadImage("funnyEnemy", "Images/weirdEnemy2");
             Renderer.LoadImage("dropShadow", "Images/dropShadow");
             Renderer.LoadImage("blank", "Images/blank");
+            Renderer.LoadImage("shuriken", "Images/shuriken");
 
             // Setup the levels
             LevelManager.RegisterGameLevel(GlobalConstants.MAIN_AREA_TAG, new MainArea());
