@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using ProjectCrawler.Management;
 using ProjectCrawler.Objects.Generic.Utility;
 
@@ -6,26 +7,50 @@ namespace ProjectCrawler.Objects.Game.Enemy
 {
     public class FunnyEnemy : AbstractEnemy
     {
-        private const int MAX_HEALTH = 10;
+        /// <summary>
+        /// Health and damage related constants.
+        /// </summary>
+        private const int MAX_HEALTH = 3;
+        private const int INVINCIBLE_TIME = 18;
 
+        /// <summary>
+        /// Movement path constants.
+        /// </summary>
         private readonly int[] PATH_DURATIONS = { 300, 140, 300, 140 };
         private readonly Vector2[] PATH_MOTION = { new Vector2(2, 0), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(0, -2) };
 
+        /// <summary>
+        /// Animation related constants.
+        /// </summary>
         private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
         private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.05f, 0.0f, -0.05f };
         private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(3, -6), new Vector2(0), new Vector2(-3, -6) };
 
+        /// <summary>
+        /// Size and shadow positioning related constants.
+        /// </summary>
         private const int WIDTH = 48;
         private const int HEIGHT = 48;
         private readonly Vector2 SIZE = new Vector2(WIDTH, HEIGHT);
         private readonly Vector2 SHADOW_OFFSET = new Vector2(0, HEIGHT / 2);
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
+        /// <summary>
+        /// Path state information.
+        /// </summary>
         private int pathFrameNumber;
         private int pathFrameTimer;
 
+        /// <summary>
+        /// Animation state information.
+        /// </summary>
         private int animFrameNumber;
         private int animFrameTimer;
+
+        /// <summary>
+        /// Damage state information.
+        /// </summary>
+        private int invincibleTimer;
 
         /// <summary>
         /// Constructor for the FunnyEnemy.
@@ -50,13 +75,14 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 position + FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
                 FRAME_ANGLE_OFFSETS[animFrameNumber], 
-                Depth: Renderer.GenerateDepthFromScreenPosition(position));
+                Depth: Renderer.GenerateDepthFromScreenPosition(position),
+                ColorFilter: Color.White * ((this.invincibleTimer / 3) % 2 == 0 ? 1f : 0f));
             Renderer.DrawSprite(
                 "dropShadow", 
                 position + SHADOW_OFFSET, 
                 SHADOW_SIZE, 
-                ColorFilter: Color.White * 0.4f, 
-                Depth: 1.0f);
+                ColorFilter: Color.White * 0.6f, 
+                Depth: GlobalConstants.SHADOW_DEPTH);
         }
 
         /// <summary>
@@ -79,6 +105,27 @@ namespace ProjectCrawler.Objects.Game.Enemy
             {
                 animFrameTimer = 0;
                 animFrameNumber = (animFrameNumber + 1) % FRAME_DURATIONS.Length;
+            }
+
+            // Update invincibility
+            if (this.invincibleTimer > 0)
+            {
+                this.invincibleTimer--;
+            }
+        }
+
+        /// <summary>
+        /// Applies damage to the FunnyEnemy from a given direction vector.
+        /// </summary>
+        /// <param name="Damage"></param>
+        /// <param name="From"></param>
+        public override void ApplyDamage(int Damage, Vector2 From)
+        {
+            // Damage only if not invincible.
+            if (this.invincibleTimer == 0)
+            {
+                this.health -= Damage;
+                this.invincibleTimer = INVINCIBLE_TIME;
             }
         }
     }

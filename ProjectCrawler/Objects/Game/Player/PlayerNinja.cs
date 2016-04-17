@@ -37,13 +37,14 @@ namespace ProjectCrawler.Objects.Game.Player
         private const int WIDTH = 48;
         private const int HEIGHT = 48;
         private readonly Vector2 SIZE = new Vector2(WIDTH, HEIGHT);
+        private readonly Vector2 DRAW_OFFSET = new Vector2(0, -(HEIGHT / 4));
         private readonly Vector2 SHADOW_OFFSET = new Vector2(0, HEIGHT / 2);
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         /// <summary>
         /// Weapon constants.
         /// </summary>
-        private const int SHURIKEN_RECHARGE_TIME = 15;
+        private const int SHURIKEN_RECHARGE_TIME = 12;
 
         /// <summary>
         /// The frame number for the animation.
@@ -80,7 +81,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// <summary>
         /// The default constructor for the Player object.
         /// </summary>
-        public PlayerNinja(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
+        public PlayerNinja(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT / 2, StartPosition))
         {
             // Default animation values.
             this.animFrameNumber = 0;
@@ -243,16 +244,16 @@ namespace ProjectCrawler.Objects.Game.Player
             // Draw the ninja!
             Renderer.DrawSprite(
                 "ninja", 
-                this.position + FRAME_POS_OFFSETS[animFrameNumber], 
+                this.position + FRAME_POS_OFFSETS[animFrameNumber] + DRAW_OFFSET, 
                 SIZE, 
                 FRAME_ANGLE_OFFSETS[animFrameNumber], 
                 Depth: Renderer.GenerateDepthFromScreenPosition(position));
             Renderer.DrawSprite(
                 "dropShadow", 
-                position + SHADOW_OFFSET, 
+                position + SHADOW_OFFSET + DRAW_OFFSET, 
                 SHADOW_SIZE, 
-                ColorFilter: Color.White * 0.4f, 
-                Depth: 1.0f);
+                ColorFilter: Color.White * 0.6f, 
+                Depth: GlobalConstants.SHADOW_DEPTH);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace ProjectCrawler.Objects.Generic.Camera
         /// <param name="StartPosition">The camera's starting position.</param>
         /// <param name="FollowedObject">The object to follow.</param>
         /// <param name="Smoothing">The smoothing applied to the camera's movement. Should be a value between 0 and 1.</param>
-        public SmoothCamera(Vector2 StartPosition, GameObject FollowedObject, float Smoothing) : base(StartPosition, FollowedObject)
+        public SmoothCamera(Vector2 StartPosition, GameObject FollowedObject, Rectangle CameraBounds, float Smoothing) : base(StartPosition, FollowedObject, CameraBounds)
         {
             this.Smoothness = Smoothing;
         }
@@ -54,6 +54,8 @@ namespace ProjectCrawler.Objects.Generic.Camera
             {
                 this.position = Vector2.Lerp(this.position, this.followedObject.Position, this.smoothness);
             }
+
+            base.Update();
         }
 
         /// <summary>

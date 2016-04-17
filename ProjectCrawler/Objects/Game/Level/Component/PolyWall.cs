@@ -12,11 +12,17 @@ namespace ProjectCrawler.Objects.Game.Level.Component
     public class PolyWall : GameObject
     {
         /// <summary>
+        /// The tag of an image to draw to represent the PolyWall.
+        /// </summary>
+        protected string imageTag;
+
+        /// <summary>
         /// Constructor.
         /// </summary>
         /// <param name="WallShape">Polygon to use for the wall shape.</param>
-        public PolyWall(Polygon WallShape) : base(WallShape)
+        public PolyWall(Polygon WallShape, string ImageTag = null) : base(WallShape)
         {
+            this.imageTag = ImageTag;
         }
 
         /// <summary>
@@ -31,13 +37,23 @@ namespace ProjectCrawler.Objects.Game.Level.Component
         /// </summary>
         public override void Render()
         {
-            for (int i = 0; i < this.points.Length; i++)
+            // If no image tag is specified, draw the wall as lines.
+            // Draw the specified image otherwise.
+            if (this.imageTag == null)
             {
-                Vector2 A = this.points[i] + this.position;
-                Vector2 B = this.points[(i + 1) % this.points.Length] + this.position;
-                Vector2 mid = (A + B) / 2f;
-                float length = (B - A).Length();
-                Renderer.DrawSprite("blank", mid, new Vector2(length, 4), this.Angle(B - A), Color.White, 1f);
+                for (int i = 0; i < this.points.Length; i++)
+                {
+                    Vector2 A = this.points[i] + this.position;
+                    Vector2 B = this.points[(i + 1) % this.points.Length] + this.position;
+                    Vector2 mid = (A + B) / 2f;
+                    float length = (B - A).Length();
+                    Renderer.DrawSprite("blank", mid, new Vector2(length, 4), this.Angle(B - A), Color.White, 1f);
+                }
+            }
+            else
+            {
+                Vector2 imageSize = Renderer.GetImageSize(this.imageTag);
+                Renderer.DrawSprite(this.imageTag, this.position, imageSize, Depth: 1f);
             }
         }
 

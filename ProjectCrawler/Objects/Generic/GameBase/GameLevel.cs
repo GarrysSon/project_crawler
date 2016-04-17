@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using ProjectCrawler.Objects.Generic.Camera;
@@ -88,7 +89,14 @@ namespace ProjectCrawler.Objects.Generic.GameBase
         /// <param name="GO">The game object to deregister.</param>
         public void DeregisterGameObject(GameObject GO)
         {
+            // Add to the deregistered list, but immediately remove from the typed lists.
             this.deregisteredObjects.Add(GO);
+            Type t = GO.GetType();
+            while (t != typeof(GameObject))
+            {
+                this.typedGameObjects[t].Remove(GO);
+                t = t.BaseType;
+            }
         }
 
         /// <summary>
@@ -96,9 +104,9 @@ namespace ProjectCrawler.Objects.Generic.GameBase
         /// </summary>
         /// <typeparam name="T">The type of game objects to retrieve.</typeparam>
         /// <returns>A list of the desired game objects.</returns>
-        public List<T> GetObjectsOfType<T>()
+        public List<T> GetObjectsOfType<T>() where T : GameObject
         {
-            return this.typedGameObjects[typeof(T)] as List<T>;
+            return this.typedGameObjects.ContainsKey(typeof(T)) ? this.typedGameObjects[typeof(T)].ConvertAll<T>(x => (T)x) : new List<T>();
         }
 
         /// <summary>

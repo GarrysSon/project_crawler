@@ -1,4 +1,5 @@
-﻿using ProjectCrawler.Objects.Generic.GameBase;
+﻿using Microsoft.Xna.Framework;
+using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Generic.Utility;
 
 namespace ProjectCrawler.Objects.Game.Enemy
@@ -27,5 +28,12 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 return health;
             }
         }
+
+        /// <summary>
+        /// Applies damage to an enemy from a given direction vector.
+        /// </summary>
+        /// <param name="Damage"></param>
+        /// <param name="From"></param>
+        public abstract void ApplyDamage(int Damage, Vector2 From);
     }
 }

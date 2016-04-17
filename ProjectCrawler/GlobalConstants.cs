@@ -14,5 +14,9 @@ namespace ProjectCrawler
         public static readonly string MAIN_AREA_TAG = "MAIN_AREA";
 
         public static readonly string TEST_WALL_TAG = "TEST_WALL";
+
+        public static readonly string TOWER_ROOM_IMAGE_TAG = "TOWER_ROOM_IMAGE";
+
+        public static float SHADOW_DEPTH = 0.9999f;
     }
 }

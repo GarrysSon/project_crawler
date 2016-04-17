@@ -20,10 +20,10 @@ namespace ProjectCrawler.Objects.Game.Level
         public MainArea() : base()
         {
             // Add a player character.
-            PlayerNinja player = new PlayerNinja(new Vector2(400, 240));
+            PlayerNinja player = new PlayerNinja(Vector2.Zero);
             this.RegisterGameObject(player);
             // Add a camera to follow the player
-            SmoothCamera smoothCamera = new SmoothCamera(player.Position, player, 0.95f);
+            SmoothCamera smoothCamera = new SmoothCamera(player.Position, player, new Rectangle(-512, -512, 1024, 1024), 0.95f);
             this.camera = smoothCamera;
             this.RegisterGameObject(Camera);
             // Add an enemy.
@@ -32,17 +32,17 @@ namespace ProjectCrawler.Objects.Game.Level
             Polygon wallShape = new Polygon(
                 new Vector2[]
                 {
-                    new Vector2(-350, -100),
-                    new Vector2(-250, -190),
-                    new Vector2(250, -190),
-                    new Vector2(350, -100),
-                    new Vector2(350, 100),
-                    new Vector2(250, 190),
-                    new Vector2(-250, 190),
-                    new Vector2(-350, 100)
+                    new Vector2(-448, -192),
+                    new Vector2(-192, -448),
+                    new Vector2(192, -448),
+                    new Vector2(448, -192),
+                    new Vector2(448, 192),
+                    new Vector2(192, 448),
+                    new Vector2(-192, 448),
+                    new Vector2(-448, 192)
                 },
-                new Vector2(400, 240));
-            PolyWall wallObject = new PolyWall(wallShape);
+                Vector2.Zero);
+            PolyWall wallObject = new PolyWall(wallShape, GlobalConstants.TOWER_ROOM_IMAGE_TAG);
             this.RegisterGameObject(wallObject);
             this.StoreValue(GlobalConstants.TEST_WALL_TAG, wallObject);
         }
@@ -53,7 +53,7 @@ namespace ProjectCrawler.Objects.Game.Level
         public override void Render()
         {
             // Clear the screen to a brownish color
-            Renderer.ClearScreen(Color.BurlyWood);
+            Renderer.ClearScreen(Color.Black);
 
             // Finish rendering the level as normal
             base.Render();

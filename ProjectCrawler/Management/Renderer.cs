@@ -42,6 +42,12 @@ namespace ProjectCrawler.Management
             textures[Tag] = cm.Load<Texture2D>(Path);
         }
 
+        public static Vector2 GetImageSize(string Tag)
+        {
+            Texture2D image = textures[Tag];
+            return new Vector2(image.Width, image.Height);
+        }
+
         /// <summary>
         /// Adds a new render target.
         /// </summary>
@@ -114,7 +120,13 @@ namespace ProjectCrawler.Management
         /// <returns></returns>
         public static float GenerateDepthFromScreenPosition(Vector2 Position)
         {
-            return 1.0f - Position.Y / (float)gd.Viewport.Height;
+            // If there is a current level, adjust for the current scroll position
+            float yAdjust = 0f;
+            if (LevelManager.CurrentLevel != null)
+            {
+                yAdjust = -(LevelManager.CurrentLevel.ScrollPoint.Y - GlobalConstants.WINDOW_HEIGHT / 2);
+            }
+            return 1.0f - (Position.Y + yAdjust) / (float)gd.Viewport.Height;
         }
     }
 }
