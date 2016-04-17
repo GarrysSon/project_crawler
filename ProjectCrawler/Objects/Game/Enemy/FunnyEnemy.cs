@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using ProjectCrawler.Management;
 using ProjectCrawler.Objects.Generic.Utility;
+using ProjectCrawler.Objects.Game.Level.Component;
 
 namespace ProjectCrawler.Objects.Game.Enemy
 {
@@ -14,10 +15,11 @@ namespace ProjectCrawler.Objects.Game.Enemy
         private const int INVINCIBLE_TIME = 18;
 
         /// <summary>
-        /// Movement path constants.
+        /// Movement constants.
         /// </summary>
-        private readonly int[] PATH_DURATIONS = { 300, 140, 300, 140 };
-        private readonly Vector2[] PATH_MOTION = { new Vector2(2, 0), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(0, -2) };
+        //private readonly int[] PATH_DURATIONS = { 300, 140, 300, 140 };
+        //private readonly Vector2[] PATH_MOTION = { new Vector2(2, 0), new Vector2(0, 2), new Vector2(-2, 0), new Vector2(0, -2) };
+        private const float SPEED = 2f;
 
         /// <summary>
         /// Animation related constants.
@@ -38,8 +40,8 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// <summary>
         /// Path state information.
         /// </summary>
-        private int pathFrameNumber;
-        private int pathFrameTimer;
+        //private int pathFrameNumber;
+        //private int pathFrameTimer;
 
         /// <summary>
         /// Animation state information.
@@ -53,16 +55,24 @@ namespace ProjectCrawler.Objects.Game.Enemy
         private int invincibleTimer;
 
         /// <summary>
+        /// Velocity of the FunnyEnemy.
+        /// </summary>
+        private Vector2 velocity;
+
+        /// <summary>
         /// Constructor for the FunnyEnemy.
         /// </summary>
         /// <param name="StartPosition">Start position of the enemy.</param>
-        public FunnyEnemy(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
+        public FunnyEnemy(Vector2 StartPosition, Vector2 StartDirection) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
-            health = MAX_HEALTH;
-            pathFrameNumber = 0;
-            pathFrameTimer = 0;
-            animFrameNumber = 0;
-            animFrameTimer = 0;
+            this.health = MAX_HEALTH;
+            //pathFrameNumber = 0;
+            //pathFrameTimer = 0;
+            this.animFrameNumber = 0;
+            this.animFrameTimer = 0;
+            StartDirection.Normalize();
+            this.velocity = StartDirection * SPEED;
+
         }
 
         /// <summary>
@@ -91,14 +101,29 @@ namespace ProjectCrawler.Objects.Game.Enemy
         public override void Update()
         {
             // Update the path
-            if (++pathFrameTimer == PATH_DURATIONS[pathFrameNumber])
+            /*if (++pathFrameTimer == PATH_DURATIONS[pathFrameNumber])
             {
                 pathFrameTimer = 0;
                 pathFrameNumber = (pathFrameNumber + 1) % PATH_DURATIONS.Length;
             }
 
             // Move along the path
-            position += PATH_MOTION[pathFrameNumber];
+            position += PATH_MOTION[pathFrameNumber];*/
+
+            // Check for intersections with the wall.
+            PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
+            IntersectionResult result = this.IsMotionIntersectingPolygon(velocity, wall);
+            if (result != null)
+            {
+                Vector2 reflection = Vector2.Reflect(this.velocity, result.SurfaceNormal);
+                float preContactLength = result.Distance / this.velocity.Length();
+                this.position += this.velocity * preContactLength + reflection * (1 - preContactLength);
+                this.velocity = reflection;
+            }
+            else
+            {
+                this.position += this.velocity;
+            }
 
             // Update the animation
             if (++animFrameTimer == FRAME_DURATIONS[animFrameNumber])
@@ -126,6 +151,12 @@ namespace ProjectCrawler.Objects.Game.Enemy
             {
                 this.health -= Damage;
                 this.invincibleTimer = INVINCIBLE_TIME;
+            }
+
+            // Deregister the enemy if it has died.
+            if (this.health <= 0)
+            {
+                LevelManager.CurrentLevel.DeregisterGameObject(this);
             }
         }
     }

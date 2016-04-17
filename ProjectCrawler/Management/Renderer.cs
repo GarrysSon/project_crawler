@@ -126,7 +126,8 @@ namespace ProjectCrawler.Management
             {
                 yAdjust = -(LevelManager.CurrentLevel.ScrollPoint.Y - GlobalConstants.WINDOW_HEIGHT / 2);
             }
-            return 1.0f - (Position.Y + yAdjust) / (float)gd.Viewport.Height;
+            float depth = 1.0f - (Position.Y + yAdjust) / (float)gd.Viewport.Height;
+            return depth > 0f ? (depth < 1f ? depth : 1f) : 0f;
         }
     }
 }

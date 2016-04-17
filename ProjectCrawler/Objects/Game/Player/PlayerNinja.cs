@@ -22,7 +22,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// <summary>
         /// The speed of the character.
         /// </summary>
-        private const int PLAYER_SPEED = 3;
+        private const int PLAYER_SPEED = 4;
 
         /// <summary>
         /// Variables used for animations.
@@ -208,25 +208,25 @@ namespace ProjectCrawler.Objects.Game.Player
                 {
                     fireTimer = SHURIKEN_RECHARGE_TIME;
                     LevelManager.CurrentLevel.RegisterGameObject(
-                        new Shuriken(this.position, new Vector2(-1, 0)));
+                        new Shuriken(this.position + DRAW_OFFSET, new Vector2(-1, 0)));
                 }
                 else if (currentState.IsKeyDown(Keys.Up))
                 {
                     fireTimer = SHURIKEN_RECHARGE_TIME;
                     LevelManager.CurrentLevel.RegisterGameObject(
-                        new Shuriken(this.position, new Vector2(0, -1)));
+                        new Shuriken(this.position + DRAW_OFFSET, new Vector2(0, -1)));
                 }
                 else if (currentState.IsKeyDown(Keys.Right))
                 {
                     fireTimer = SHURIKEN_RECHARGE_TIME;
                     LevelManager.CurrentLevel.RegisterGameObject(
-                        new Shuriken(this.position, new Vector2(1, 0)));
+                        new Shuriken(this.position + DRAW_OFFSET, new Vector2(1, 0)));
                 }
                 else if (currentState.IsKeyDown(Keys.Down))
                 {
                     fireTimer = SHURIKEN_RECHARGE_TIME;
                     LevelManager.CurrentLevel.RegisterGameObject(
-                        new Shuriken(this.position, new Vector2(0, 1)));
+                        new Shuriken(this.position + DRAW_OFFSET, new Vector2(0, 1)));
                 }
             }
             else
