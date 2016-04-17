@@ -42,10 +42,25 @@ namespace ProjectCrawler.Management
             textures[Tag] = cm.Load<Texture2D>(Path);
         }
 
+        /// <summary>
+        /// Returns
+        /// </summary>
+        /// <param name="Tag">The tag to get an image size from.</param>
+        /// <returns>Size of the image with the given tag.</returns>
         public static Vector2 GetImageSize(string Tag)
         {
             Texture2D image = textures[Tag];
             return new Vector2(image.Width, image.Height);
+        }
+
+        /// <summary>
+        /// Returns the image associated with the given tag.
+        /// </summary>
+        /// <param name="Tag">The tag to get an image from.</param>
+        /// <returns>Image associated with the given tag.</returns>
+        public static Texture2D GetImage(string Tag)
+        {
+            return textures[Tag];
         }
 
         /// <summary>

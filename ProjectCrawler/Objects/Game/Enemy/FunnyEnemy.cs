@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using ProjectCrawler.Management;
 using ProjectCrawler.Objects.Generic.Utility;
 using ProjectCrawler.Objects.Game.Level.Component;
+using Microsoft.Xna.Framework.Graphics;
+using ProjectCrawler.Objects.Generic.GameBase;
 
 namespace ProjectCrawler.Objects.Game.Enemy
 {
@@ -153,10 +155,14 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 this.invincibleTimer = INVINCIBLE_TIME;
             }
 
-            // Deregister the enemy if it has died.
             if (this.health <= 0)
             {
+                // Deregister the enemy if it has died.
                 LevelManager.CurrentLevel.DeregisterGameObject(this);
+                // Create an exploded enemy.
+                Texture2D tex = Renderer.GetImage("funnyEnemy");
+                BreakableObject breakable = new BreakableObject(this.position, tex, 20, 8, 12, new Vector2(24, 200), this.position.Y + HEIGHT / 2, SIZE);
+                LevelManager.CurrentLevel.RegisterGameObject(breakable);
             }
         }
     }

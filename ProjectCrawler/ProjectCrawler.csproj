@@ -43,6 +43,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Objects\Game\Player\Weapon\Shuriken.cs" />
+    <Compile Include="Objects\Generic\GameBase\BreakableObject.cs" />
     <Compile Include="Objects\Generic\GameBase\GameLevel.cs" />
     <Compile Include="Objects\Game\Enemy\AbstractEnemy.cs" />
     <Compile Include="Objects\Game\Enemy\FunnyEnemy.cs" />
