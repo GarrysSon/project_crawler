@@ -260,11 +260,12 @@ namespace ProjectCrawler.Objects.Generic.GameBase
                     }
                 }
 
+                float shadowWidth = (rightBound - leftBound) * 3f;
                 Renderer.DrawSprite(
                     "dropShadow", 
                     new Vector2(posX + (rightBound - leftBound) / 2 + leftBound, baseY), 
-                    new Vector2(30, 15), 
-                    ColorFilter: Color.White * 0.3f * alpha, 
+                    new Vector2(shadowWidth, shadowWidth * 0.5f), 
+                    ColorFilter: Color.White * 0.2f * alpha, 
                     Depth: GlobalConstants.SHADOW_DEPTH);
             }
 
