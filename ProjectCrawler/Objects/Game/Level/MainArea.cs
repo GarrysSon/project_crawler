@@ -27,10 +27,10 @@ namespace ProjectCrawler.Objects.Game.Level
             this.camera = smoothCamera;
             this.RegisterGameObject(Camera);
             // Add some enemies.
-            this.RegisterGameObject(new FunnyEnemy(new Vector2(-300f, -300f), Vector2.UnitX));
-            this.RegisterGameObject(new FunnyEnemy(new Vector2(300f, -300f), Vector2.UnitY));
-            this.RegisterGameObject(new FunnyEnemy(new Vector2(300f, 300f), Vector2.UnitX * -1f));
-            this.RegisterGameObject(new FunnyEnemy(new Vector2(-300f, 300f), Vector2.UnitY * -1f));
+            this.RegisterGameObject(new FunnyEnemy(new Vector2(0, -300f), Vector2.UnitX));
+            this.RegisterGameObject(new FunnyEnemy(new Vector2(300f, 0), Vector2.UnitY));
+            this.RegisterGameObject(new FunnyEnemy(new Vector2(0, 300f), Vector2.UnitX * -1f));
+            this.RegisterGameObject(new FunnyEnemy(new Vector2(-300f, 0), Vector2.UnitY * -1f));
             // Add a PolyWall as a test.
             Polygon wallShape = new Polygon(
                 new Vector2[]

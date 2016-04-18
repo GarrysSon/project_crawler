@@ -15,7 +15,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// </summary>
         private const int MAX_HEALTH = 3;
         private const int INVINCIBLE_TIME = 18;
-        private const float KNOCKBACK_FORCE = 10;
+        private const float KNOCKBACK_FORCE = 6;
 
         /// <summary>
         /// Movement constants.
@@ -122,7 +122,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
             {
                 Vector2 reflection = Vector2.Reflect(allMotion, result.SurfaceNormal);
                 float preContactLength = result.Distance / allMotion.Length();
-                this.position += allMotion * preContactLength + reflection * (1 - preContactLength);
+                this.position += allMotion * (preContactLength - 0.01f) + reflection * (1 - preContactLength);
                 this.velocity = reflection;
                 this.damageImpulse = Vector2.Zero;
             }
