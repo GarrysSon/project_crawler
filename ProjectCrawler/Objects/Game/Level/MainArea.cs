@@ -35,10 +35,11 @@ namespace ProjectCrawler.Objects.Game.Level
             Polygon wallShape = new Polygon(
                 new Vector2[]
                 {
-                    new Vector2(-448, -192),
-                    new Vector2(-192, -448),
-                    new Vector2(192, -448),
-                    new Vector2(448, -192),
+                    // Adjust the top four points upward to allow for some overlap from objects.
+                    new Vector2(-448, -192 - 24),
+                    new Vector2(-192, -448 - 24),
+                    new Vector2(192, -448 - 24),
+                    new Vector2(448, -192 - 24),
                     new Vector2(448, 192),
                     new Vector2(192, 448),
                     new Vector2(-192, 448),
