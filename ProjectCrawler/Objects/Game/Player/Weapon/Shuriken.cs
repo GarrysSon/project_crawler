@@ -5,6 +5,7 @@ using ProjectCrawler.Objects.Game.Enemy;
 using ProjectCrawler.Objects.Game.Level.Component;
 using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Generic.Utility;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProjectCrawler.Objects.Game.Player.Weapon
 {
@@ -117,6 +118,9 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
                         {
                             e.ApplyDamage(BASE_DAMAGE, this.velocity);
                             LevelManager.CurrentLevel.DeregisterGameObject(this);
+                            Texture2D tex = Renderer.GetImage("shuriken");
+                            BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(8, 48), this.position.Y + 24, SIZE);
+                            LevelManager.CurrentLevel.RegisterGameObject(breakable);
                             return;
                         }
                     }
