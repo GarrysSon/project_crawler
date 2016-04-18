@@ -15,6 +15,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// </summary>
         private const int MAX_HEALTH = 3;
         private const int INVINCIBLE_TIME = 18;
+        private const float KNOCKBACK_FORCE = 10;
 
         /// <summary>
         /// Movement constants.
@@ -54,6 +55,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// <summary>
         /// Damage state information.
         /// </summary>
+        private Vector2 damageImpulse;
         private int invincibleTimer;
 
         /// <summary>
@@ -113,18 +115,20 @@ namespace ProjectCrawler.Objects.Game.Enemy
             position += PATH_MOTION[pathFrameNumber];*/
 
             // Check for intersections with the wall.
+            Vector2 allMotion = this.velocity + (this.invincibleTimer > 0 ? this.damageImpulse : Vector2.Zero);
             PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
-            IntersectionResult result = this.IsMotionIntersectingPolygon(velocity, wall);
+            IntersectionResult result = this.IsMotionIntersectingPolygon(allMotion, wall);
             if (result != null)
             {
-                Vector2 reflection = Vector2.Reflect(this.velocity, result.SurfaceNormal);
-                float preContactLength = result.Distance / this.velocity.Length();
-                this.position += this.velocity * preContactLength + reflection * (1 - preContactLength);
+                Vector2 reflection = Vector2.Reflect(allMotion, result.SurfaceNormal);
+                float preContactLength = result.Distance / allMotion.Length();
+                this.position += allMotion * preContactLength + reflection * (1 - preContactLength);
                 this.velocity = reflection;
+                this.damageImpulse = Vector2.Zero;
             }
             else
             {
-                this.position += this.velocity;
+                this.position += allMotion;
             }
 
             // Update the animation
@@ -137,7 +141,15 @@ namespace ProjectCrawler.Objects.Game.Enemy
             // Update invincibility
             if (this.invincibleTimer > 0)
             {
+                this.damageImpulse = Vector2.Lerp(Vector2.Zero, this.damageImpulse, (float)this.invincibleTimer / INVINCIBLE_TIME);
                 this.invincibleTimer--;
+
+                // Normalize the speed if the invincible timer runs out
+                if (this.invincibleTimer == 0)
+                {
+                    this.velocity.Normalize();
+                    this.velocity *= SPEED;
+                }
             }
         }
 
@@ -153,6 +165,8 @@ namespace ProjectCrawler.Objects.Game.Enemy
             {
                 this.health -= Damage;
                 this.invincibleTimer = INVINCIBLE_TIME;
+                From.Normalize();
+                this.damageImpulse = From * KNOCKBACK_FORCE;
             }
 
             if (this.health <= 0)
