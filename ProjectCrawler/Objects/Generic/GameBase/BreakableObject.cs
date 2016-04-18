@@ -118,7 +118,7 @@ namespace ProjectCrawler.Objects.Generic.GameBase
                                 texBreakable.Width, 
                                 texBreakable.Height, 
                                 (float)Math.Cos(angle) * speed, (float)Math.Sin(angle) * speed,
-                                BaseY));
+                                BaseY - texBreakable.Height / 4 + rand.Next(texBreakable.Height / 2)));
                     }
 
                     // Get the closest chunk
