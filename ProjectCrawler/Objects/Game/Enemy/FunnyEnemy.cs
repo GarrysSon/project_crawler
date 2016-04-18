@@ -175,7 +175,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 LevelManager.CurrentLevel.DeregisterGameObject(this);
                 // Create an exploded enemy.
                 Texture2D tex = Renderer.GetImage("funnyEnemy");
-                BreakableObject breakable = new BreakableObject(this.position, tex, 20, 8, 12, new Vector2(24, 200), this.position.Y + HEIGHT / 2, SIZE);
+                BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(24, 48), this.position.Y + HEIGHT / 2, SIZE);
                 LevelManager.CurrentLevel.RegisterGameObject(breakable);
             }
         }
