@@ -42,6 +42,7 @@ namespace ProjectCrawler
             Renderer.LoadImage("dropShadow", "Images/dropShadow");
             Renderer.LoadImage("blank", "Images/blank");
             Renderer.LoadImage("shuriken", "Images/shuriken");
+            Renderer.LoadImage("lazerEnemy", "Images/lazerEnemy");
             Renderer.LoadImage(GlobalConstants.TOWER_ROOM_IMAGE_TAG, "Images/towerRoom");
 
             // Setup the levels

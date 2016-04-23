@@ -18,5 +18,9 @@ namespace ProjectCrawler
         public static readonly string TOWER_ROOM_IMAGE_TAG = "TOWER_ROOM_IMAGE";
 
         public static float SHADOW_DEPTH = 0.9999f;
+
+        public static readonly int[] BOUNCE_FRAME_DURATIONS = { 5, 5, 5, 5 };
+        public static readonly float[] BOUNCE_FRAME_ANGLE_OFFSETS = { 0.0f, 0.05f, 0.0f, -0.05f };
+        public static readonly Vector2[] BOUNCE_FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(3, -6), new Vector2(0), new Vector2(-3, -6) };
     }
 }

@@ -31,6 +31,7 @@ namespace ProjectCrawler.Objects.Game.Level
             this.RegisterGameObject(new FunnyEnemy(new Vector2(300f, 0), Vector2.UnitY));
             this.RegisterGameObject(new FunnyEnemy(new Vector2(0, 300f), Vector2.UnitX * -1f));
             this.RegisterGameObject(new FunnyEnemy(new Vector2(-300f, 0), Vector2.UnitY * -1f));
+            this.RegisterGameObject(new LazerEnemy(new Vector2(200)));
             // Add a PolyWall as a test.
             Polygon wallShape = new Polygon(
                 new Vector2[]

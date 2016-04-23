@@ -25,13 +25,6 @@ namespace ProjectCrawler.Objects.Game.Player
         private const int PLAYER_SPEED = 4;
 
         /// <summary>
-        /// Variables used for animations.
-        /// </summary>
-        private readonly int[] FRAME_DURATIONS = { 5, 5, 5, 5 };
-        private readonly float[] FRAME_ANGLE_OFFSETS = { 0.0f, 0.05f, 0.0f, -0.05f };
-        private readonly Vector2[] FRAME_POS_OFFSETS = { new Vector2(0), new Vector2(3, -6), new Vector2(0), new Vector2(-3, -6) };
-
-        /// <summary>
         /// Variables used for sizing and shadow drawing
         /// </summary>
         private const int WIDTH = 48;
@@ -171,10 +164,10 @@ namespace ProjectCrawler.Objects.Game.Player
             if (this.animate)
             {
                 // Update the animation
-                if (++animFrameTimer == FRAME_DURATIONS[animFrameNumber])
+                if (++animFrameTimer == GlobalConstants.BOUNCE_FRAME_DURATIONS[animFrameNumber])
                 {
                     animFrameTimer = 0;
-                    animFrameNumber = (animFrameNumber + 1) % FRAME_DURATIONS.Length;
+                    animFrameNumber = (animFrameNumber + 1) % GlobalConstants.BOUNCE_FRAME_DURATIONS.Length;
                 }
             }
             else
@@ -243,9 +236,9 @@ namespace ProjectCrawler.Objects.Game.Player
             // Draw the ninja!
             Renderer.DrawSprite(
                 "ninja", 
-                this.position + FRAME_POS_OFFSETS[animFrameNumber], 
+                this.position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
-                FRAME_ANGLE_OFFSETS[animFrameNumber], 
+                GlobalConstants.BOUNCE_FRAME_ANGLE_OFFSETS[animFrameNumber], 
                 Depth: Renderer.GenerateDepthFromScreenPosition(position));
             Renderer.DrawSprite(
                 "dropShadow", 
