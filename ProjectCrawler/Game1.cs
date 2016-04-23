@@ -43,6 +43,7 @@ namespace ProjectCrawler
             Renderer.LoadImage("blank", "Images/blank");
             Renderer.LoadImage("shuriken", "Images/shuriken");
             Renderer.LoadImage(GlobalConstants.TOWER_ROOM_IMAGE_TAG, "Images/towerRoom");
+            Renderer.LoadImage("fartHeart", "Images/fartHeart");
 
             // Setup the levels
             LevelManager.RegisterGameLevel(GlobalConstants.MAIN_AREA_TAG, new MainArea());
