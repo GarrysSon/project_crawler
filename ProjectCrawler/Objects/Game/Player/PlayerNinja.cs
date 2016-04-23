@@ -222,10 +222,10 @@ namespace ProjectCrawler.Objects.Game.Player
             if (this.animate)
             {
                 // Update the animation
-                if (++animFrameTimer == FRAME_DURATIONS[animFrameNumber])
+                if (++animFrameTimer == GlobalConstants.BOUNCE_FRAME_DURATIONS[animFrameNumber])
                 {
                     animFrameTimer = 0;
-                    animFrameNumber = (animFrameNumber + 1) % FRAME_DURATIONS.Length;
+                    animFrameNumber = (animFrameNumber + 1) % GlobalConstants.BOUNCE_FRAME_DURATIONS.Length;
                 }
             }
             else
@@ -314,9 +314,9 @@ namespace ProjectCrawler.Objects.Game.Player
             // Draw the ninja!
             Renderer.DrawSprite(
                 GlobalConstants.NINJA_IMAGE_TAG, 
-                this.position + FRAME_POS_OFFSETS[animFrameNumber], 
+                this.position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
-                FRAME_ANGLE_OFFSETS[animFrameNumber], 
+                GlobalConstants.BOUNCE_FRAME_ANGLE_OFFSETS[animFrameNumber], 
                 Depth: Renderer.GenerateDepthFromScreenPosition(position));
 
             // Draw the dropshadow.

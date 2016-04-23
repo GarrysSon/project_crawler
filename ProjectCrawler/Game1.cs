@@ -42,6 +42,7 @@ namespace ProjectCrawler
             Renderer.LoadImage(GlobalConstants.DROP_SHADOW_IMAGE_TAG, "Images/dropShadow");
             Renderer.LoadImage(GlobalConstants.BLANK_IMAGE_TAG, "Images/blank");
             Renderer.LoadImage(GlobalConstants.SHURIKEN_IMAGE_TAG, "Images/shuriken");
+            Renderer.LoadImage(GlobalConstants.LAZER_ENEMY_IMAGE_TAG, "Images/lazerEnemy");
             Renderer.LoadImage(GlobalConstants.TOWER_ROOM_IMAGE_TAG, "Images/towerRoom");
             Renderer.LoadImage(GlobalConstants.FART_HEART_IMAGE_TAG, "Images/fartHeart");
 
