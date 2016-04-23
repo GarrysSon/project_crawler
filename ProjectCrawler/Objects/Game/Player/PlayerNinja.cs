@@ -6,6 +6,9 @@ using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Generic.Utility;
 using ProjectCrawler.Objects.Game.Level.Component;
 using ProjectCrawler.Objects.Game.Player.Weapon;
+using System.Collections.Generic;
+using ProjectCrawler.Objects.Game.Enemy;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProjectCrawler.Objects.Game.Player
 {
@@ -23,6 +26,11 @@ namespace ProjectCrawler.Objects.Game.Player
         /// The speed of the character.
         /// </summary>
         private const int PLAYER_SPEED = 4;
+
+        /// <summary>
+        /// The invincibility frame time for the player.
+        /// </summary>
+        private const int INVINCIBLE_TIME = 30;
 
         /// <summary>
         /// Variables used for animations.
@@ -73,6 +81,12 @@ namespace ProjectCrawler.Objects.Game.Player
         private int fireTimer;
 
         /// <summary>
+        /// The damage state information.
+        /// </summary>
+        private int invincibleTimer;
+        private Vector2 damageImpulse;
+
+        /// <summary>
         /// The Player's health.
         /// </summary>
         [DefaultValue(MAX_HEALTH)]
@@ -95,6 +109,34 @@ namespace ProjectCrawler.Objects.Game.Player
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
             this.fireTimer = 0;
+        }
+
+        /// <summary>
+        /// Applies damage to the player from a given direction.
+        /// </summary>
+        /// <param name="damage">The damage applied to the ninja.</param>
+        /// <param name="knockBack">The knockback applied to the ninja.</param>
+        /// <param name="from">The direction in which the damage is coming.</param>
+        public void ApplyDamage(int damage, int knockBack, Vector2 from)
+        {
+            // Damage only if not invincible.
+            if (this.invincibleTimer == 0)
+            {
+                this.Health -= damage;
+                this.invincibleTimer = INVINCIBLE_TIME;
+                from.Normalize();
+                this.damageImpulse = from * knockBack;
+            }
+
+            if (this.Health <= 0)
+            {
+                // Deregister the enemy if it has died.
+                LevelManager.CurrentLevel.DeregisterGameObject(this);
+                // Create an exploded enemy.
+                Texture2D tex = Renderer.GetImage(GlobalConstants.NINJA_IMAGE_TAG);
+                BreakableObject breakable = new BreakableObject(this.position, tex, 120, 6, 10, new Vector2(24, 64), this.position.Y + HEIGHT / 2, SIZE);
+                LevelManager.CurrentLevel.RegisterGameObject(breakable);
+            }
         }
 
         /// <summary>
@@ -241,6 +283,26 @@ namespace ProjectCrawler.Objects.Game.Player
             {
                 fireTimer--;
             }
+
+            // Decrement the invincibility timer if needed.
+            if(invincibleTimer > 0)
+            {
+                invincibleTimer--;
+            }
+
+            // Check for collisions with enemies.
+            List<AbstractEnemy> enemies = LevelManager.CurrentLevel.GetObjectsOfType<AbstractEnemy>();
+            foreach (AbstractEnemy e in enemies)
+            {
+                // Check to see if the player is touching an enemy.
+                bool enemyResult = this.IsIntersectingPolygon(e);
+                if(enemyResult)
+                {
+                    this.ApplyDamage(e.ContactDamage, e.KnockBack, this.position - e.Position);
+                    return;
+                }
+
+            }
         }
 
         /// <summary>
@@ -251,7 +313,7 @@ namespace ProjectCrawler.Objects.Game.Player
             // This is the renderer you know...no more jokes.
             // Draw the ninja!
             Renderer.DrawSprite(
-                "ninja", 
+                GlobalConstants.NINJA_IMAGE_TAG, 
                 this.position + FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
                 FRAME_ANGLE_OFFSETS[animFrameNumber], 
@@ -259,7 +321,7 @@ namespace ProjectCrawler.Objects.Game.Player
 
             // Draw the dropshadow.
             Renderer.DrawSprite(
-                "dropShadow", 
+                GlobalConstants.DROP_SHADOW_IMAGE_TAG, 
                 position + SHADOW_OFFSET, 
                 SHADOW_SIZE, 
                 ColorFilter: Color.White * 0.6f, 
@@ -274,7 +336,7 @@ namespace ProjectCrawler.Objects.Game.Player
             for (int i = 0; i < Health; i++ )
             {
                 Renderer.DrawSprite(
-                    "fartHeart",
+                    GlobalConstants.FART_HEART_IMAGE_TAG,
                     new Vector2(
                         LevelManager.CurrentLevel.ScrollPoint.X + (float)GlobalConstants.WINDOW_WIDTH / 2 - (maxXOffset - i * xOffset),
                         LevelManager.CurrentLevel.ScrollPoint.Y - (float)GlobalConstants.WINDOW_HEIGHT / 2 + yOffset),
