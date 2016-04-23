@@ -41,6 +41,13 @@ namespace ProjectCrawler.Objects.Game.Player
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
 
         /// <summary>
+        /// Variables used for sizing the health hearts.
+        /// </summary>
+        private const int HEART_WIDTH = 20;
+        private const int HEART_HEIGHT = 23;
+        private readonly Vector2 HEART_SIZE = new Vector2(HEART_WIDTH, HEART_HEIGHT);
+
+        /// <summary>
         /// Weapon constants.
         /// </summary>
         private const int SHURIKEN_RECHARGE_TIME = 12;
@@ -259,8 +266,8 @@ namespace ProjectCrawler.Objects.Game.Player
                 Depth: GlobalConstants.SHADOW_DEPTH);
 
             // The x and y offsets for the hearts.
-            float xOffset = 20f;
-            float yOffset = 23f;
+            float xOffset = HEART_SIZE.X;
+            float yOffset = HEART_SIZE.Y;
             float maxXOffset = MAX_HEALTH * xOffset;
 
             // Draw the hearts reversed so they fall off in the correct order.
@@ -271,7 +278,7 @@ namespace ProjectCrawler.Objects.Game.Player
                     new Vector2(
                         LevelManager.CurrentLevel.ScrollPoint.X + (float)GlobalConstants.WINDOW_WIDTH / 2 - (maxXOffset - i * xOffset),
                         LevelManager.CurrentLevel.ScrollPoint.Y - (float)GlobalConstants.WINDOW_HEIGHT / 2 + yOffset),
-                    new Vector2(20f, 23f));
+                    HEART_SIZE);
             }
         }
     }
