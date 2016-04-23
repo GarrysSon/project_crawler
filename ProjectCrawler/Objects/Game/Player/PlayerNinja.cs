@@ -17,7 +17,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// <summary>
         /// The max health alotted to the player character.
         /// </summary>
-        private const int MAX_HEALTH = 100;
+        private const int MAX_HEALTH = 5;
 
         /// <summary>
         /// The speed of the character.
@@ -32,6 +32,13 @@ namespace ProjectCrawler.Objects.Game.Player
         private readonly Vector2 SIZE = new Vector2(WIDTH, HEIGHT);
         private readonly Vector2 SHADOW_OFFSET = new Vector2(0, HEIGHT / 2);
         private readonly Vector2 SHADOW_SIZE = new Vector2(60, 30);
+
+        /// <summary>
+        /// Variables used for sizing the health hearts.
+        /// </summary>
+        private const int HEART_WIDTH = 20;
+        private const int HEART_HEIGHT = 23;
+        private readonly Vector2 HEART_SIZE = new Vector2(HEART_WIDTH, HEART_HEIGHT);
 
         /// <summary>
         /// Weapon constants.
@@ -75,6 +82,8 @@ namespace ProjectCrawler.Objects.Game.Player
         /// </summary>
         public PlayerNinja(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
+            this.Health = MAX_HEALTH;
+
             // Default animation values.
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
@@ -240,12 +249,30 @@ namespace ProjectCrawler.Objects.Game.Player
                 SIZE, 
                 GlobalConstants.BOUNCE_FRAME_ANGLE_OFFSETS[animFrameNumber], 
                 Depth: Renderer.GenerateDepthFromScreenPosition(position));
+
+            // Draw the dropshadow.
             Renderer.DrawSprite(
                 "dropShadow", 
                 position + SHADOW_OFFSET, 
                 SHADOW_SIZE, 
                 ColorFilter: Color.White * 0.6f, 
                 Depth: GlobalConstants.SHADOW_DEPTH);
+
+            // The x and y offsets for the hearts.
+            float xOffset = HEART_SIZE.X;
+            float yOffset = HEART_SIZE.Y;
+            float maxXOffset = MAX_HEALTH * xOffset;
+
+            // Draw the hearts reversed so they fall off in the correct order.
+            for (int i = 0; i < Health; i++ )
+            {
+                Renderer.DrawSprite(
+                    "fartHeart",
+                    new Vector2(
+                        LevelManager.CurrentLevel.ScrollPoint.X + (float)GlobalConstants.WINDOW_WIDTH / 2 - (maxXOffset - i * xOffset),
+                        LevelManager.CurrentLevel.ScrollPoint.Y - (float)GlobalConstants.WINDOW_HEIGHT / 2 + yOffset),
+                    HEART_SIZE);
+            }
         }
     }
 }
