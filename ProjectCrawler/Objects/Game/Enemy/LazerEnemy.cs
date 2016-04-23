@@ -152,7 +152,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
 
         public override int ContactDamage
         {
-            get { return 1; }
+            get { return 11; }
         }
     }
 }
