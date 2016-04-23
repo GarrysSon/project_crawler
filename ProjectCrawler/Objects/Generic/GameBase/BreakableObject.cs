@@ -183,7 +183,7 @@ namespace ProjectCrawler.Objects.Generic.GameBase
                 bottomBound = int.MinValue;
 
                 points = new Color[Width, Height];
-                texBlank = Renderer.GetImage("blank");
+                texBlank = Renderer.GetImage(GlobalConstants.BLANK_IMAGE_TAG);
 
                 posX = PosX;
                 posY = PosY;
@@ -250,7 +250,7 @@ namespace ProjectCrawler.Objects.Generic.GameBase
                             if (points[x, y].A > 0)
                             {
                                 Renderer.DrawSprite(
-                                    "blank", 
+                                    GlobalConstants.BLANK_IMAGE_TAG, 
                                     new Vector2(x + posX, y + posY), 
                                     Vector2.One, 
                                     ColorFilter: points[x, y] * alpha, 
@@ -262,7 +262,7 @@ namespace ProjectCrawler.Objects.Generic.GameBase
 
                 float shadowWidth = (rightBound - leftBound) * 3f;
                 Renderer.DrawSprite(
-                    "dropShadow", 
+                    GlobalConstants.DROP_SHADOW_IMAGE_TAG, 
                     new Vector2(posX + (rightBound - leftBound) / 2 + leftBound, baseY), 
                     new Vector2(shadowWidth, shadowWidth * 0.5f), 
                     ColorFilter: Color.White * 0.2f * alpha, 

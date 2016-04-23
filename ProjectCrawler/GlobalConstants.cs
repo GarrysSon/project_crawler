@@ -15,8 +15,18 @@ namespace ProjectCrawler
 
         public static readonly string TEST_WALL_TAG = "TEST_WALL";
 
-        public static readonly string TOWER_ROOM_IMAGE_TAG = "TOWER_ROOM_IMAGE";
-
         public static float SHADOW_DEPTH = 0.9999f;
+
+        /// <summary>
+        /// All needed image tag constants go here.
+        /// </summary>
+        public static readonly string NINJA_IMAGE_TAG = "ninja";
+        public static readonly string FUNNY_ENEMY_IMAGE_TAG = "funnyEnemy";
+        public static readonly string DROP_SHADOW_IMAGE_TAG = "dropShadow";
+        public static readonly string TOWER_ROOM_IMAGE_TAG = "TOWER_ROOM_IMAGE";
+        public static readonly string BLANK_IMAGE_TAG = "blank";
+        public static readonly string SHURIKEN_IMAGE_TAG = "shuriken";
+        public static readonly string FART_HEART_IMAGE_TAG = "fartHeart";
+
     }
 }

@@ -118,7 +118,7 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
                         {
                             e.ApplyDamage(BASE_DAMAGE, this.velocity);
                             LevelManager.CurrentLevel.DeregisterGameObject(this);
-                            Texture2D tex = Renderer.GetImage("shuriken");
+                            Texture2D tex = Renderer.GetImage(GlobalConstants.SHURIKEN_IMAGE_TAG);
                             BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(8, 48), this.position.Y + 24, SIZE);
                             LevelManager.CurrentLevel.RegisterGameObject(breakable);
                             return;
@@ -151,14 +151,14 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
         public override void Render()
         {
             Renderer.DrawSprite(
-                "shuriken", 
+                GlobalConstants.SHURIKEN_IMAGE_TAG, 
                 this.position + new Vector2(0, this.gravityPositionAdjust), 
                 SIZE, 
                 Angle: this.angle, 
                 Depth: 0f, 
                 ColorFilter: Color.White * this.fadeTimer);
             Renderer.DrawSprite(
-                "dropShadow", 
+                GlobalConstants.DROP_SHADOW_IMAGE_TAG, 
                 this.position + SHADOW_OFFSET, 
                 SHADOW_SIZE * (2 - this.fadeTimer), 
                 Depth: GlobalConstants.SHADOW_DEPTH, 
