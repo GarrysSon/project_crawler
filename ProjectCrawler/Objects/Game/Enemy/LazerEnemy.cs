@@ -21,6 +21,14 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// Movement constants.
         /// </summary>
         private const float SPEED = 2f;
+        private readonly Vector2[] PATROL_MOVEMENTS = {
+            new Vector2(SPEED, 0),
+            new Vector2(-SPEED, 0),
+            new Vector2(0, SPEED),
+            new Vector2(0, -SPEED),
+            Vector2.Zero
+        };
+        private const int PATROL_PERIOD = 60;
 
         /// <summary>
         /// Size and shadow positioning related constants.
@@ -50,6 +58,12 @@ namespace ProjectCrawler.Objects.Game.Enemy
         private int invincibleTimer;
 
         /// <summary>
+        /// Patrol and chase information.
+        /// </summary>
+        private int patrolTimer;
+        private bool isInPursuit;
+
+        /// <summary>
         /// Velocity of the LazerEnemy.
         /// </summary>
         private Vector2 velocity;
@@ -59,6 +73,8 @@ namespace ProjectCrawler.Objects.Game.Enemy
             this.health = MAX_HEALTH;
             this.animFrameNumber = 0;
             this.animFrameTimer = 0;
+            this.patrolTimer = 0;
+            this.isInPursuit = false;
             this.velocity = Vector2.Zero;
         }
 
@@ -103,6 +119,18 @@ namespace ProjectCrawler.Objects.Game.Enemy
 
         public override void Update()
         {
+            // Update enemy patrolling.
+            if (this.patrolTimer > 0)
+            {
+                this.patrolTimer--;
+            }
+            else
+            {
+                Random rand = new Random();
+                this.patrolTimer = PATROL_PERIOD;
+                this.velocity = PATROL_MOVEMENTS[rand.Next(PATROL_MOVEMENTS.Length)];
+            }
+
             // Check for intersections with the wall.
             Vector2 allMotion = this.velocity + (this.invincibleTimer > 0 ? this.damageImpulse : Vector2.Zero);
             PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
@@ -121,10 +149,17 @@ namespace ProjectCrawler.Objects.Game.Enemy
             }
 
             // Update the animation
-            if (++animFrameTimer == GlobalConstants.BOUNCE_FRAME_DURATIONS[animFrameNumber])
+            if (this.velocity.LengthSquared() > 0)
             {
-                animFrameTimer = 0;
-                animFrameNumber = (animFrameNumber + 1) % GlobalConstants.BOUNCE_FRAME_DURATIONS.Length;
+                if (++animFrameTimer == GlobalConstants.BOUNCE_FRAME_DURATIONS[animFrameNumber])
+                {
+                    animFrameTimer = 0;
+                    animFrameNumber = (animFrameNumber + 1) % GlobalConstants.BOUNCE_FRAME_DURATIONS.Length;
+                }
+            }
+            else
+            {
+                animFrameNumber = 0;
             }
 
             // Update invincibility
