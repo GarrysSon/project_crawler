@@ -5,6 +5,7 @@ using ProjectCrawler.Objects.Generic.Utility;
 using ProjectCrawler.Objects.Game.Level.Component;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Game.Player;
 
 namespace ProjectCrawler.Objects.Game.Enemy
 {
@@ -29,6 +30,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
             Vector2.Zero
         };
         private const int PATROL_PERIOD = 60;
+        private const int SIGHT_DISTANCE_SQUARED = 200 * 200;
 
         /// <summary>
         /// Size and shadow positioning related constants.
@@ -119,16 +121,34 @@ namespace ProjectCrawler.Objects.Game.Enemy
 
         public override void Update()
         {
-            // Update enemy patrolling.
-            if (this.patrolTimer > 0)
+            // Have the enemy patrol when not in range of the player
+            PlayerNinja player = LevelManager.CurrentLevel.RetrieveValue<PlayerNinja>(GlobalConstants.PLAYER_TAG);
+            Vector2 diffVector = player.Position - this.position;
+            if (diffVector.LengthSquared() < SIGHT_DISTANCE_SQUARED)
             {
-                this.patrolTimer--;
+                isInPursuit = true;
+                diffVector.Normalize();
+                this.velocity = Vector2.Lerp(this.velocity, diffVector * SPEED, 0.1f);
             }
-            else
+            else if (isInPursuit)
             {
-                Random rand = new Random();
+                isInPursuit = false;
                 this.patrolTimer = PATROL_PERIOD;
-                this.velocity = PATROL_MOVEMENTS[rand.Next(PATROL_MOVEMENTS.Length)];
+                this.velocity = PATROL_MOVEMENTS[4];
+            }
+
+            if (!isInPursuit)
+            {
+                if (this.patrolTimer > 0)
+                {
+                    this.patrolTimer--;
+                }
+                else
+                {
+                    Random rand = new Random();
+                    this.patrolTimer = PATROL_PERIOD;
+                    this.velocity = PATROL_MOVEMENTS[rand.Next(PATROL_MOVEMENTS.Length)];
+                }
             }
 
             // Check for intersections with the wall.

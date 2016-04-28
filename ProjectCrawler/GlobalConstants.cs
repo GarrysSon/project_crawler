@@ -27,6 +27,11 @@ namespace ProjectCrawler
         public static readonly string SHURIKEN_IMAGE_TAG = "shuriken";
         public static readonly string FART_HEART_IMAGE_TAG = "fartHeart";
 
+        /// <summary>
+        /// Object access tags.
+        /// </summary>
+        public static readonly string PLAYER_TAG = "player";
+
         public static float SHADOW_DEPTH = 0.9999f;
 
         public static readonly int[] BOUNCE_FRAME_DURATIONS = { 5, 5, 5, 5 };

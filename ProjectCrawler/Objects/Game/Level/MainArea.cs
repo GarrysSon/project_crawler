@@ -22,6 +22,7 @@ namespace ProjectCrawler.Objects.Game.Level
             // Add a player character.
             PlayerNinja player = new PlayerNinja(Vector2.Zero);
             this.RegisterGameObject(player);
+            this.StoreValue(GlobalConstants.PLAYER_TAG, player);
             // Add a camera to follow the player
             SmoothCamera smoothCamera = new SmoothCamera(player.Position, player, new Rectangle(-512, -512, 1024, 1024), 0.95f);
             this.camera = smoothCamera;
