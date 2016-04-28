@@ -179,5 +179,15 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 }
             }
         }
+
+        public override int KnockBack
+        {
+            get { return 6; }
+        }
+
+        public override int ContactDamage
+        {
+            get { return 11; }
+        }
     }
 }

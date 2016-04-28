@@ -78,14 +78,14 @@ namespace ProjectCrawler.Objects.Game.Enemy
         public override void Render()
         {
             Renderer.DrawSprite(
-                "funnyEnemy", 
+                GlobalConstants.FUNNY_ENEMY_IMAGE_TAG, 
                 position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
                 GlobalConstants.BOUNCE_FRAME_ANGLE_OFFSETS[animFrameNumber], 
                 Depth: Renderer.GenerateDepthFromScreenPosition(position),
                 ColorFilter: Color.White * ((this.invincibleTimer / 3) % 2 == 0 ? 1f : 0f));
             Renderer.DrawSprite(
-                "dropShadow", 
+                GlobalConstants.DROP_SHADOW_IMAGE_TAG, 
                 position + SHADOW_OFFSET, 
                 SHADOW_SIZE, 
                 ColorFilter: Color.White * 0.6f, 
@@ -170,10 +170,20 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 // Deregister the enemy if it has died.
                 LevelManager.CurrentLevel.DeregisterGameObject(this);
                 // Create an exploded enemy.
-                Texture2D tex = Renderer.GetImage("funnyEnemy");
+                Texture2D tex = Renderer.GetImage(GlobalConstants.FUNNY_ENEMY_IMAGE_TAG);
                 BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(24, 64), this.position.Y + HEIGHT / 2, SIZE);
                 LevelManager.CurrentLevel.RegisterGameObject(breakable);
             }
+        }
+
+        public override int KnockBack
+        {
+            get { return 6; }
+        }
+
+        public override int ContactDamage
+        {
+            get { return 1; }
         }
     }
 }

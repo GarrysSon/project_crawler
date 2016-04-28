@@ -30,6 +30,16 @@ namespace ProjectCrawler.Objects.Game.Enemy
         }
 
         /// <summary>
+        /// The knockback caused by the enemy.
+        /// </summary>
+        public abstract int KnockBack { get; }
+
+        /// <summary>
+        /// The contact damage caused by the enemy.
+        /// </summary>
+        public abstract int ContactDamage { get; }
+
+        /// <summary>
         /// Applies damage to an enemy from a given direction vector.
         /// </summary>
         /// <param name="Damage"></param>

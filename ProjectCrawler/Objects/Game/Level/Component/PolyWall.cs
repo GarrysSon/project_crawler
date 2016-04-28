@@ -47,7 +47,7 @@ namespace ProjectCrawler.Objects.Game.Level.Component
                     Vector2 B = this.points[(i + 1) % this.points.Length] + this.position;
                     Vector2 mid = (A + B) / 2f;
                     float length = (B - A).Length();
-                    Renderer.DrawSprite("blank", mid, new Vector2(length, 4), this.Angle(B - A), Color.White, 1f);
+                    Renderer.DrawSprite(GlobalConstants.BLANK_IMAGE_TAG, mid, new Vector2(length, 4), this.Angle(B - A), Color.White, 1f);
                 }
             }
             else
