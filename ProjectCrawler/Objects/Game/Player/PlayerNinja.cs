@@ -31,6 +31,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// The invincibility frame time for the player.
         /// </summary>
         private const int INVINCIBLE_TIME = 30;
+        private const int KNOCKBACK_TIME = 6;
 
         /// <summary>
         /// Variables used for animations.
@@ -84,6 +85,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// The damage state information.
         /// </summary>
         private int invincibleTimer;
+        private int knockbackTimer;
         private Vector2 damageImpulse;
 
         /// <summary>
@@ -124,6 +126,7 @@ namespace ProjectCrawler.Objects.Game.Player
             {
                 this.Health -= damage;
                 this.invincibleTimer = INVINCIBLE_TIME;
+                this.knockbackTimer = KNOCKBACK_TIME;
                 from.Normalize();
                 this.damageImpulse = from * knockBack;
             }
@@ -235,6 +238,7 @@ namespace ProjectCrawler.Objects.Game.Player
 
             // See if the Player's motion will intersect the wall.
             PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
+            motion += this.knockbackTimer > 0 ? damageImpulse : Vector2.Zero;
             IntersectionResult result = this.IsMotionIntersectingPolygon(motion * PLAYER_SPEED, wall);
             if (result != null)
             {
@@ -285,23 +289,32 @@ namespace ProjectCrawler.Objects.Game.Player
             }
 
             // Decrement the invincibility timer if needed.
-            if(invincibleTimer > 0)
+            if (invincibleTimer > 0)
             {
                 invincibleTimer--;
             }
-
-            // Check for collisions with enemies.
-            List<AbstractEnemy> enemies = LevelManager.CurrentLevel.GetObjectsOfType<AbstractEnemy>();
-            foreach (AbstractEnemy e in enemies)
+            else
             {
-                // Check to see if the player is touching an enemy.
-                bool enemyResult = this.IsIntersectingPolygon(e);
-                if(enemyResult)
+                // Check for collisions with enemies.
+                List<AbstractEnemy> enemies = LevelManager.CurrentLevel.GetObjectsOfType<AbstractEnemy>();
+                foreach (AbstractEnemy e in enemies)
                 {
-                    this.ApplyDamage(e.ContactDamage, e.KnockBack, this.position - e.Position);
-                    return;
-                }
+                    // Check to see if the player is touching an enemy.
+                    bool enemyResult = this.IsIntersectingPolygon(e);
+                    if (enemyResult)
+                    {
+                        this.ApplyDamage(e.ContactDamage, e.KnockBack, this.position - e.Position);
+                        return;
+                    }
 
+                }
+            }
+
+            // Decrement the knockback timer if needed
+            if (knockbackTimer > 0)
+            {
+                this.damageImpulse = Vector2.Lerp(Vector2.Zero, this.damageImpulse, (float)this.knockbackTimer / KNOCKBACK_TIME);
+                knockbackTimer--;
             }
         }
 
@@ -317,7 +330,8 @@ namespace ProjectCrawler.Objects.Game.Player
                 this.position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber], 
                 SIZE, 
                 GlobalConstants.BOUNCE_FRAME_ANGLE_OFFSETS[animFrameNumber], 
-                Depth: Renderer.GenerateDepthFromScreenPosition(position));
+                Depth: Renderer.GenerateDepthFromScreenPosition(position),
+                ColorFilter: Color.White * ((this.invincibleTimer / 3) % 2 == 0 ? 1f : 0f));
 
             // Draw the dropshadow.
             Renderer.DrawSprite(
