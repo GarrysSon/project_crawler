@@ -6,6 +6,7 @@ using ProjectCrawler.Objects.Game.Level.Component;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Game.Player;
+using ProjectCrawler.Objects.Game.Enemy.Weapon;
 
 namespace ProjectCrawler.Objects.Game.Enemy
 {
@@ -31,6 +32,11 @@ namespace ProjectCrawler.Objects.Game.Enemy
         };
         private const int PATROL_PERIOD = 60;
         private const int SIGHT_DISTANCE_SQUARED = 200 * 200;
+
+        /// <summary>
+        /// Laser shit.
+        /// </summary>
+        private const int LASER_RECHARGE_PERIOD = 60;
 
         /// <summary>
         /// Size and shadow positioning related constants.
@@ -69,6 +75,11 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// Velocity of the LazerEnemy.
         /// </summary>
         private Vector2 velocity;
+
+        /// <summary>
+        /// Laser state shit.
+        /// </summary>
+        private int laserTimer;
 
         public LazerEnemy(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
@@ -129,6 +140,17 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 isInPursuit = true;
                 diffVector.Normalize();
                 this.velocity = Vector2.Lerp(this.velocity, diffVector * SPEED, 0.1f);
+
+                // Check if a laser should be fired.
+                if (this.laserTimer > 0)
+                {
+                    this.laserTimer--;
+                }
+                else
+                {
+                    this.laserTimer = LASER_RECHARGE_PERIOD;
+                    LevelManager.CurrentLevel.RegisterGameObject(new Laser(this.Position, diffVector));
+                }
             }
             else if (isInPursuit)
             {
