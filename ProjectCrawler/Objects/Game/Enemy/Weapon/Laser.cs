@@ -28,7 +28,8 @@ namespace ProjectCrawler.Objects.Game.Enemy.Weapon
             };
 
         private readonly Vector2 GLOW_OFFSET = new Vector2(0, 24);
-        private readonly Vector2 GLOW_SIZE = new Vector2(32, 16);
+        private readonly Vector2 GLOW_SIZE = new Vector2(128, 64);
+        private readonly Color GLOW_COLOR = new Color(192, 0, 255);
 
         /// <summary>
         /// laser speed related constants
@@ -102,6 +103,13 @@ namespace ProjectCrawler.Objects.Game.Enemy.Weapon
                 DRAW_SIZE,
                 Depth: 0f,
                 DrawAdditive: true);
+            Renderer.DrawSprite(
+                GlobalConstants.GLOW_IMAGE_TAG,
+                this.position + GLOW_OFFSET,
+                GLOW_SIZE,
+                Depth: 0f,
+                DrawAdditive: true,
+                ColorFilter: GLOW_COLOR * 0.5f);
         }
     }
 }

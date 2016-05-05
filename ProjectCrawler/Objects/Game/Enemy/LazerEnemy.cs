@@ -37,9 +37,9 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// Laser shit.
         /// </summary>
         private const int LASER_RECHARGE_PERIOD = 60;
-        private const int LASER_FLASH_LENGTH = 5;
+        private const int LASER_FLASH_LENGTH = 4;
         private readonly Vector2 LASER_FLASH_START_SIZE = new Vector2(128);
-        private readonly Vector2 LASER_FLASH_END_SIZE = new Vector2(256, 0);
+        private readonly Vector2 LASER_FLASH_END_SIZE = new Vector2(512, 0);
         private readonly Color LASER_FLASH_COLOR = new Color(192, 0, 255);
 
         /// <summary>

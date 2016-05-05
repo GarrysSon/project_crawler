@@ -42,6 +42,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Objects\Game\Effect\BasicFlash.cs" />
     <Compile Include="Objects\Game\Enemy\LazerEnemy.cs" />
     <Compile Include="Objects\Game\Enemy\Weapon\Laser.cs" />
     <Compile Include="Objects\Game\Player\Weapon\Shuriken.cs" />

@@ -6,6 +6,7 @@ using ProjectCrawler.Objects.Game.Level.Component;
 using ProjectCrawler.Objects.Generic.GameBase;
 using ProjectCrawler.Objects.Generic.Utility;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectCrawler.Objects.Game.Effect;
 
 namespace ProjectCrawler.Objects.Game.Player.Weapon
 {
@@ -46,6 +47,14 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
         /// Post-live fade speed;
         /// </summary>
         private const float FADE_SPEED = -0.04f;
+
+        /// <summary>
+        /// Contact flash properties.
+        /// </summary>
+        private readonly Color CONTACT_FLASH_COLOR = new Color(255, 200, 0);
+        private readonly Vector2 CONTACT_FLASH_START_SIZE = new Vector2(64);
+        private readonly Vector2 CONTACT_FLASH_END_SIZE = new Vector2(256);
+        private const int CONTACT_FLASH_DURATION = 6;
 
         /// <summary>
         /// Velocity of the shuriken.
@@ -106,6 +115,13 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
                     this.gravityVelocityAdjust = BOUNCE_Y_VELOCITY_ADJUST;
                     //this.velocity.Y += BOUNCE_Y_VELOCITY_ADJUST;
                     this.isLive = false;
+                    BasicFlash flash = new BasicFlash(
+                        CONTACT_FLASH_COLOR,
+                        this.position,
+                        CONTACT_FLASH_START_SIZE,
+                        CONTACT_FLASH_END_SIZE,
+                        CONTACT_FLASH_DURATION);
+                    LevelManager.CurrentLevel.RegisterGameObject(flash);
                 }
                 else
                 {
@@ -121,6 +137,13 @@ namespace ProjectCrawler.Objects.Game.Player.Weapon
                             Texture2D tex = Renderer.GetImage(GlobalConstants.SHURIKEN_IMAGE_TAG);
                             BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(8, 48), this.position.Y + 24, SIZE);
                             LevelManager.CurrentLevel.RegisterGameObject(breakable);
+                            BasicFlash flash = new BasicFlash(
+                                CONTACT_FLASH_COLOR,
+                                this.position,
+                                CONTACT_FLASH_START_SIZE,
+                                CONTACT_FLASH_END_SIZE,
+                                CONTACT_FLASH_DURATION);
+                            LevelManager.CurrentLevel.RegisterGameObject(flash);
                             return;
                         }
                     }
