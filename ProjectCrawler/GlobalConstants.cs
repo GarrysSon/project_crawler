@@ -27,6 +27,7 @@ namespace ProjectCrawler
         public static readonly string SHURIKEN_IMAGE_TAG = "shuriken";
         public static readonly string FART_HEART_IMAGE_TAG = "fartHeart";
         public static readonly string LASER_IMAGE_TAG = "laser";
+        public static readonly string GLOW_IMAGE_TAG = "glow";
 
         /// <summary>
         /// Object access tags.

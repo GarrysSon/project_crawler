@@ -47,6 +47,7 @@ namespace ProjectCrawler
             Renderer.LoadImage(GlobalConstants.TOWER_ROOM_IMAGE_TAG, "Images/towerRoom2");
             Renderer.LoadImage(GlobalConstants.FART_HEART_IMAGE_TAG, "Images/fartHeart");
             Renderer.LoadImage(GlobalConstants.LASER_IMAGE_TAG, "Images/laser");
+            Renderer.LoadImage(GlobalConstants.GLOW_IMAGE_TAG, "Images/glow");
 
             // Setup the levels
             LevelManager.RegisterGameLevel(GlobalConstants.MAIN_AREA_TAG, new MainArea());
