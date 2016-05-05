@@ -13,6 +13,7 @@ namespace ProjectCrawler.Management
         private static ContentManager cm;
         private static GraphicsDevice gd;
         private static SpriteBatch spriteBatch;
+        private static SpriteBatch additiveBatch;
         private static Dictionary<string, Texture2D> textures;
         private static Dictionary<string, RenderTarget2D> renderTargets;
         private static Matrix beginMatrix;
@@ -29,6 +30,7 @@ namespace ProjectCrawler.Management
             gd.PresentationParameters.BackBufferWidth = GlobalConstants.WINDOW_WIDTH;
             gd.PresentationParameters.BackBufferHeight = GlobalConstants.WINDOW_HEIGHT;
             spriteBatch = new SpriteBatch(gd);
+            additiveBatch = new SpriteBatch(gd);
             textures = new Dictionary<string, Texture2D>();
             renderTargets = new Dictionary<string, RenderTarget2D>();
         }
@@ -98,6 +100,7 @@ namespace ProjectCrawler.Management
                 beginMatrix = Matrix.CreateTranslation(Vector3.Zero);
             }
             spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: beginMatrix);
+            additiveBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: beginMatrix, blendState: BlendState.Additive);
         }
 
         /// <summary>
@@ -106,6 +109,7 @@ namespace ProjectCrawler.Management
         public static void EndRender()
         {
             spriteBatch.End();
+            additiveBatch.End();
         }
 
         /// <summary>
@@ -118,25 +122,16 @@ namespace ProjectCrawler.Management
         }
 
         /// <summary>
-        /// Switches the current blend state.
-        /// </summary>
-        /// <param name="BS">Blend state to use.</param>
-        public static void SwapBlendState(BlendState BS)
-        {
-            spriteBatch.End();
-            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: beginMatrix, blendState: BS);
-        }
-
-        /// <summary>
         /// Draws a sprite at a given location with a given size.
         /// </summary>
         /// <param name="Tag">Tag of a previously loaded image.</param>
         /// <param name="Position">Position to draw it.</param>
         /// <param name="Size">Size to draw it.</param>
-        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size, float Angle = 0f, Color? ColorFilter = null, float Depth = 0.0f)
+        public static void DrawSprite(string Tag, Vector2 Position, Vector2 Size, float Angle = 0f, Color? ColorFilter = null, float Depth = 0.0f, bool DrawAdditive = false)
         {
+            SpriteBatch sb = DrawAdditive ? additiveBatch : spriteBatch;
             Texture2D tex = textures[Tag];
-            spriteBatch.Draw(
+            sb.Draw(
                 tex, 
                 new Rectangle((int)Position.X, (int)Position.Y, (int)Size.X, (int)Size.Y), 
                 null, 

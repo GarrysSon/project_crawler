@@ -100,7 +100,8 @@ namespace ProjectCrawler.Objects.Game.Enemy.Weapon
                 GlobalConstants.LASER_IMAGE_TAG,
                 this.position,
                 DRAW_SIZE,
-                Depth: 0f);
+                Depth: 0f,
+                DrawAdditive: true);
         }
     }
 }

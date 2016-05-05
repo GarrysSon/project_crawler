@@ -37,6 +37,10 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// Laser shit.
         /// </summary>
         private const int LASER_RECHARGE_PERIOD = 60;
+        private const int LASER_FLASH_LENGTH = 5;
+        private readonly Vector2 LASER_FLASH_START_SIZE = new Vector2(128);
+        private readonly Vector2 LASER_FLASH_END_SIZE = new Vector2(256, 0);
+        private readonly Color LASER_FLASH_COLOR = new Color(192, 0, 255);
 
         /// <summary>
         /// Size and shadow positioning related constants.
@@ -80,6 +84,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
         /// Laser state shit.
         /// </summary>
         private int laserTimer;
+        private int laserFlashTimer;
 
         public LazerEnemy(Vector2 StartPosition) : base(Polygon.CreateRectangle(WIDTH, HEIGHT, StartPosition))
         {
@@ -115,6 +120,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
 
         public override void Render()
         {
+            // Draw the enemy and its shadow.
             Renderer.DrawSprite(
                 "lazerEnemy",
                 position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber],
@@ -128,10 +134,29 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 SHADOW_SIZE,
                 ColorFilter: Color.White * 0.6f,
                 Depth: GlobalConstants.SHADOW_DEPTH);
+
+            // Draw the laser flash if necessary
+            if (laserFlashTimer > 0)
+            {
+                //Renderer.SetBlendState(BlendState.Additive);
+                Renderer.DrawSprite(
+                    GlobalConstants.GLOW_IMAGE_TAG, 
+                    position + GlobalConstants.BOUNCE_FRAME_POS_OFFSETS[animFrameNumber], 
+                    Vector2.Lerp(LASER_FLASH_END_SIZE, LASER_FLASH_START_SIZE, laserFlashTimer / (float)LASER_FLASH_LENGTH), 
+                    ColorFilter: LASER_FLASH_COLOR,
+                    Depth: 0.0f,
+                    DrawAdditive: true);
+            }
         }
 
         public override void Update()
         {
+            // Update the laser flash
+            if (laserFlashTimer > 0)
+            {
+                laserFlashTimer--;
+            }
+
             // Have the enemy patrol when not in range of the player
             PlayerNinja player = LevelManager.CurrentLevel.RetrieveValue<PlayerNinja>(GlobalConstants.PLAYER_TAG);
             Vector2 diffVector = player.Position - this.position;
@@ -149,6 +174,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 else
                 {
                     this.laserTimer = LASER_RECHARGE_PERIOD;
+                    this.laserFlashTimer = LASER_FLASH_LENGTH;
                     LevelManager.CurrentLevel.RegisterGameObject(new Laser(this.Position, diffVector));
                 }
             }
