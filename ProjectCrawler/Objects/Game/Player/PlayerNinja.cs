@@ -31,7 +31,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// The invincibility frame time for the player.
         /// </summary>
         private const int INVINCIBLE_TIME = 30;
-        private const int KNOCKBACK_TIME = 6;
+        private const int KNOCKBACK_TIME = 15;
 
         /// <summary>
         /// Variables used for animations.
@@ -218,6 +218,7 @@ namespace ProjectCrawler.Objects.Game.Player
             if (this.animate)
             {
                 motion.Normalize();
+                motion *= PLAYER_SPEED;
             }
             // this.position += motion * PLAYER_SPEED;
 
@@ -239,19 +240,22 @@ namespace ProjectCrawler.Objects.Game.Player
             // See if the Player's motion will intersect the wall.
             PolyWall wall = LevelManager.CurrentLevel.RetrieveValue<PolyWall>(GlobalConstants.TEST_WALL_TAG);
             motion += this.knockbackTimer > 0 ? damageImpulse : Vector2.Zero;
-            IntersectionResult result = this.IsMotionIntersectingPolygon(motion * PLAYER_SPEED, wall);
+            IntersectionResult result = this.IsMotionIntersectingPolygon(motion, wall);
             if (result != null)
             {
                 // Find the amount the Player should slide relative to the wall.
-                Vector2 slide = (PLAYER_SPEED - result.Distance) * result.Surface * Vector2.Dot(motion, result.Surface);
+                float motionLength = motion.Length();
+                Vector2 normalMotion = motion;
+                normalMotion.Normalize();
+                Vector2 slide = (motionLength - result.Distance) * result.Surface * Vector2.Dot(normalMotion, result.Surface);
                 // Set the motion to move to the wall then slide.
-                motion = motion * (result.Distance - 2f) + slide;
+                motion = normalMotion * (result.Distance - 2f) + slide;
                 // Move the player object.
                 this.position += motion;
             }
             else
             {
-                this.position += motion * PLAYER_SPEED;
+                this.position += motion;
             }
 
             // Shuriken can be fired if the fire timer equals 0.
