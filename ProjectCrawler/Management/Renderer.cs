@@ -15,6 +15,7 @@ namespace ProjectCrawler.Management
         private static SpriteBatch spriteBatch;
         private static Dictionary<string, Texture2D> textures;
         private static Dictionary<string, RenderTarget2D> renderTargets;
+        private static Matrix beginMatrix;
 
         /// <summary>
         /// Initializes the Renderer to do its job.
@@ -88,7 +89,15 @@ namespace ProjectCrawler.Management
         /// </summary>
         public static void BeginRender(Matrix? Transformation = null)
         {
-            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: Transformation);
+            if (Transformation.HasValue)
+            {
+                beginMatrix = Transformation.Value;
+            }
+            else
+            {
+                beginMatrix = Matrix.CreateTranslation(Vector3.Zero);
+            }
+            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: beginMatrix);
         }
 
         /// <summary>
@@ -106,6 +115,16 @@ namespace ProjectCrawler.Management
         public static void ClearScreen(Color C)
         {
             gd.Clear(C);
+        }
+
+        /// <summary>
+        /// Switches the current blend state.
+        /// </summary>
+        /// <param name="BS">Blend state to use.</param>
+        public static void SwapBlendState(BlendState BS)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(sortMode: SpriteSortMode.BackToFront, transformMatrix: beginMatrix, blendState: BS);
         }
 
         /// <summary>
