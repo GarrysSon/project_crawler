@@ -31,7 +31,7 @@ namespace ProjectCrawler.Objects.Game.Enemy
             Vector2.Zero
         };
         private const int PATROL_PERIOD = 60;
-        private const int SIGHT_DISTANCE_SQUARED = 200 * 200;
+        private const int SIGHT_DISTANCE_SQUARED = 250 * 250;
 
         /// <summary>
         /// Laser shit.
