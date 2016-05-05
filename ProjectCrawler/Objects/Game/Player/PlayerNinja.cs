@@ -9,6 +9,7 @@ using ProjectCrawler.Objects.Game.Player.Weapon;
 using System.Collections.Generic;
 using ProjectCrawler.Objects.Game.Enemy;
 using Microsoft.Xna.Framework.Graphics;
+using ProjectCrawler.Objects.Game.Effect;
 
 namespace ProjectCrawler.Objects.Game.Player
 {
@@ -32,6 +33,7 @@ namespace ProjectCrawler.Objects.Game.Player
         /// </summary>
         private const int INVINCIBLE_TIME = 30;
         private const int KNOCKBACK_TIME = 15;
+        private const int RESPAWN_INVINCIBLE_TIME = 120;
 
         /// <summary>
         /// Variables used for animations.
@@ -133,12 +135,14 @@ namespace ProjectCrawler.Objects.Game.Player
 
             if (this.Health <= 0)
             {
-                // Deregister the enemy if it has died.
-                LevelManager.CurrentLevel.DeregisterGameObject(this);
                 // Create an exploded enemy.
                 Texture2D tex = Renderer.GetImage(GlobalConstants.NINJA_IMAGE_TAG);
                 BreakableObject breakable = new BreakableObject(this.position, tex, 120, 6, 10, new Vector2(24, 64), this.position.Y + HEIGHT / 2, SIZE);
                 LevelManager.CurrentLevel.RegisterGameObject(breakable);
+                // Respawn the player at the middle of the level.
+                this.position = Vector2.Zero;
+                this.invincibleTimer = RESPAWN_INVINCIBLE_TIME;
+                this.Health = MAX_HEALTH;
             }
         }
 

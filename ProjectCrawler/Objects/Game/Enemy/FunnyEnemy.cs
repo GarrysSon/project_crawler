@@ -5,6 +5,7 @@ using ProjectCrawler.Objects.Generic.Utility;
 using ProjectCrawler.Objects.Game.Level.Component;
 using Microsoft.Xna.Framework.Graphics;
 using ProjectCrawler.Objects.Generic.GameBase;
+using ProjectCrawler.Objects.Game.Effect;
 
 namespace ProjectCrawler.Objects.Game.Enemy
 {
@@ -173,6 +174,24 @@ namespace ProjectCrawler.Objects.Game.Enemy
                 Texture2D tex = Renderer.GetImage(GlobalConstants.FUNNY_ENEMY_IMAGE_TAG);
                 BreakableObject breakable = new BreakableObject(this.position, tex, 30, 6, 10, new Vector2(24, 64), this.position.Y + HEIGHT / 2, SIZE);
                 LevelManager.CurrentLevel.RegisterGameObject(breakable);
+                // Generate some swank ass explosion.
+                GenerateExplosion();
+            }
+        }
+
+        private void GenerateExplosion()
+        {
+            Random rand = new Random();
+            for (int i = 0; i < 15; i++)
+            {
+                Vector2 pos = new Vector2(rand.Next(64) - 32, rand.Next(64) - 32);
+                BasicFlash flash = new BasicFlash(
+                    new Color(rand.Next(255), rand.Next(255), rand.Next(255)),
+                    position + pos,
+                    new Vector2(32 + rand.Next(128)),
+                    new Vector2(8 + rand.Next(24)),
+                    rand.Next(40) + 5);
+                LevelManager.CurrentLevel.RegisterGameObject(flash);
             }
         }
 
